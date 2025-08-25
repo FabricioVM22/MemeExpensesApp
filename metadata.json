@@ -1,0 +1,5 @@
+{
+  "name": "SimpliFi Expense Tracker",
+  "description": "A simple, beautiful, and intuitive expense tracker to manage your finances. Add income and expenses, set monthly budgets by category, and visualize your spending habits with clear graphics, all stored locally on your device.",
+  "requestFramePermissions": []
+}
