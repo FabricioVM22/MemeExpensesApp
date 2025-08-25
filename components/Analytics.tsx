@@ -21,10 +21,10 @@ const CustomTooltip = ({ active, payload, label, t }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white dark:bg-slate-700 p-2 border border-rose-100 dark:border-slate-600 rounded shadow">
+        <div className="bg-white dark:bg-[#3a2e40] p-2 border border-gray-200 dark:border-[#56445d] rounded shadow">
           <p className="font-bold">{label}</p>
-          <p className="text-rose-500">{t('tooltipSpent', { amount: data.spent.toFixed(2) })}</p>
-          <p className="text-fuchsia-500">{t('tooltipBudget', { amount: data.budget.toFixed(2) })}</p>
+          <p className="text-red-500">{t('tooltipSpent', { amount: `${t('currencySymbol')}${data.spent.toFixed(2)}` })}</p>
+          <p className="text-[#548687]">{t('tooltipBudget', { amount: `${t('currencySymbol')}${data.budget.toFixed(2)}` })}</p>
         </div>
       );
     }
@@ -38,8 +38,8 @@ export default function Analytics({ transactions, budget, categories }: Analytic
   // Guard against Recharts not being loaded yet from the CDN
   if (typeof window === 'undefined' || !window.Recharts) {
     return (
-        <div className="flex items-center justify-center h-96 bg-white dark:bg-slate-800 rounded-lg shadow">
-            <p className="text-slate-500 dark:text-slate-400">{t('loadingCharts')}</p>
+        <div className="flex items-center justify-center h-96 bg-white dark:bg-[#56445d] rounded-lg shadow">
+            <p className="text-[#56445d] dark:text-[#8fbc94]">{t('loadingCharts')}</p>
         </div>
     );
   }
@@ -57,7 +57,7 @@ export default function Analytics({ transactions, budget, categories }: Analytic
         .reduce((sum, e) => sum + e.amount, 0);
 
       return {
-        name: t(category.name as TranslationKey),
+        name: category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name,
         spent: categorySpent,
         budget: categoryBudget,
         color: category.color,
@@ -69,7 +69,7 @@ export default function Analytics({ transactions, budget, categories }: Analytic
     return (
         <div className="text-center py-10 px-4">
             <h2 className="text-xl font-semibold mb-2">{t('spendingAnalytics')}</h2>
-            <p className="text-slate-500 dark:text-slate-400">
+            <p className="text-[#56445d] dark:text-[#8fbc94]">
                 {t('noSpendingData')}
             </p>
         </div>
@@ -80,18 +80,18 @@ export default function Analytics({ transactions, budget, categories }: Analytic
     <div className="space-y-8">
       <div>
         <h2 className="text-xl font-semibold mb-4 text-center">{t('spendingVsBudget')}</h2>
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-4 h-96">
+        <div className="bg-white dark:bg-[#56445d] rounded-lg shadow p-4 h-96">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={spendingData} layout="vertical" margin={{ top: 5, right: 20, left: 50, bottom: 5 }}>
-              <XAxis type="number" stroke="#94a3b8" />
-              <YAxis dataKey="name" type="category" stroke="#94a3b8" width={80} />
-              <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: 'rgba(255, 255, 255, 0.1)' }} />
+              <XAxis type="number" stroke="#8fbc94" />
+              <YAxis dataKey="name" type="category" stroke="#8fbc94" width={80} />
+              <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: 'rgba(143, 188, 148, 0.1)' }} />
               <Legend />
-              <Bar dataKey="budget" fill="#d946ef" name={t('budget')} radius={[0, 4, 4, 0]} background={{ fill: '#475569', radius: 4 }}/>
+              <Bar dataKey="budget" fill="#548687" name={t('budget')} radius={[0, 4, 4, 0]} background={{ fill: 'rgba(143, 188, 148, 0.2)', radius: 4 }}/>
               <Bar dataKey="spent" name={t('spent')}>
                 {spendingData.map((entry, index) => {
                   const isOverBudget = entry.spent > entry.budget && entry.budget > 0;
-                  return <Cell key={`cell-${index}`} fill={isOverBudget ? '#e11d48' : entry.color} />;
+                  return <Cell key={`cell-${index}`} fill={isOverBudget ? '#ef4444' : entry.color} />;
                 })}
               </Bar>
             </BarChart>

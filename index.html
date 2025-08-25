@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SimpliFi Expense Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
     <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +21,7 @@
         font-family: 'Poppins', sans-serif;
       }
       .text-gradient {
-        background-image: linear-gradient(to right, #d946ef, #ec4899);
+        background-image: linear-gradient(to right, #548687, #6da34d);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -32,7 +37,7 @@
 }
 </script>
 </head>
-<body class="bg-rose-50 dark:bg-slate-900">
+<body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>

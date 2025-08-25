@@ -41,21 +41,21 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
   return (
     <div className="space-y-6">
       <section>
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-4 space-y-4">
+        <div className="bg-white dark:bg-[#56445d] rounded-lg shadow p-4 space-y-4">
           <div className="text-center">
-            <p className="text-sm text-slate-500 dark:text-slate-400">{t('currentBalance')}</p>
-            <p className={`text-3xl font-bold ${balance >= 0 ? 'text-teal-500' : 'text-rose-500'}`}>
-              ${balance.toFixed(2)}
+            <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('currentBalance')}</p>
+            <p className={`text-3xl font-bold ${balance >= 0 ? 'text-[#6da34d]' : 'text-red-500'}`}>
+              {t('currencySymbol')}{balance.toFixed(2)}
             </p>
           </div>
           <div className="flex justify-between text-center">
             <div>
-              <p className="text-sm text-slate-500 dark:text-slate-400">{t('income')}</p>
-              <p className="text-lg font-semibold text-teal-500">${totalIncome.toFixed(2)}</p>
+              <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('income')}</p>
+              <p className="text-lg font-semibold text-[#6da34d]">{t('currencySymbol')}{totalIncome.toFixed(2)}</p>
             </div>
             <div>
-              <p className="text-sm text-slate-500 dark:text-slate-400">{t('expenses')}</p>
-              <p className="text-lg font-semibold text-rose-500">${totalExpenses.toFixed(2)}</p>
+              <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('expenses')}</p>
+              <p className="text-lg font-semibold text-red-500">{t('currencySymbol')}{totalExpenses.toFixed(2)}</p>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
 
       {budget.length === 0 && (
         <section>
-            <div className="bg-fuchsia-100 dark:bg-fuchsia-900/50 border-l-4 border-fuchsia-500 text-fuchsia-700 dark:text-fuchsia-300 p-4 rounded-lg" role="alert">
+            <div className="bg-[#548687]/10 dark:bg-[#548687]/20 border-l-4 border-[#548687] text-[#548687] dark:text-[#c5e99b] p-4 rounded-lg" role="alert">
                 <div className="flex items-center">
                     <CogIcon className="w-6 h-6 mr-3"/>
                     <div>
@@ -71,7 +71,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
                         <p className="text-sm">{t('budgetNotSet')}</p>
                     </div>
                 </div>
-                <button onClick={() => setActiveView(View.Settings)} className="mt-3 w-full bg-fuchsia-500 text-white py-2 px-4 rounded-lg hover:bg-fuchsia-600 transition-colors">
+                <button onClick={() => setActiveView(View.Settings)} className="mt-3 w-full bg-[#548687] text-white py-2 px-4 rounded-lg hover:bg-[#4a7879] transition-colors">
                     {t('setBudget')}
                 </button>
             </div>
@@ -79,8 +79,8 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
       )}
 
       <section>
-        <h2 className="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">{t('recentTransactions')}</h2>
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-4 space-y-3">
+        <h2 className="text-lg font-semibold mb-2 text-[#3a2e40] dark:text-[#f0fdf4]">{t('recentTransactions')}</h2>
+        <div className="bg-white dark:bg-[#56445d] rounded-lg shadow p-4 space-y-3">
           {recentTransactions.length > 0 ? (
             recentTransactions.map(transaction => {
               const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
@@ -89,10 +89,10 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
 
               if (transaction.type === 'income') {
                   displayName = t('income');
-                  displayColor = '#14b8a6'; // teal-500
+                  displayColor = '#6da34d'; // Asparagus
               } else {
-                  displayName = category ? t(category.name as TranslationKey) : t('category_other');
-                  displayColor = category ? category.color : '#d4d4d8'; // zinc-300
+                  displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
+                  displayColor = category ? category.color : '#b7b7a4';
               }
 
               return (
@@ -101,17 +101,17 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
                     <CategoryIcon color={displayColor} categoryName={displayName}/>
                     <div>
                       <p className="font-semibold">{transaction.description}</p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">{displayName}</p>
+                      <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{displayName}</p>
                     </div>
                   </div>
-                  <p className={`font-bold ${transaction.type === 'income' ? 'text-teal-500' : 'text-rose-500'}`}>
-                    {transaction.type === 'income' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                  <p className={`font-bold ${transaction.type === 'income' ? 'text-[#6da34d]' : 'text-red-500'}`}>
+                    {transaction.type === 'income' ? '+' : '-'}{t('currencySymbol')}{transaction.amount.toFixed(2)}
                   </p>
                 </div>
               );
             })
           ) : (
-            <p className="text-center text-slate-500 dark:text-slate-400 py-4">{t('noTransactions')}</p>
+            <p className="text-center text-[#56445d] dark:text-[#8fbc94] py-4">{t('noTransactions')}</p>
           )}
         </div>
       </section>

@@ -1,6 +1,7 @@
 
 export const en = {
   // General
+  currencySymbol: '₡',
   income: 'Income',
   expense: 'Expense',
   expenses: 'Expenses',
@@ -32,6 +33,7 @@ export const en = {
   // BottomNav.tsx
   dashboard: 'Dashboard',
   analytics: 'Analytics',
+  history: 'History',
   
   // Dashboard.tsx
   currentBalance: 'Current Balance',
@@ -48,6 +50,10 @@ export const en = {
   spendingVsBudget: 'Spending vs Budget',
   tooltipSpent: 'Spent: ${amount}',
   tooltipBudget: 'Budget: ${amount}',
+
+  // History.tsx
+  noHistory: 'No past monthly records found.',
+  totalBalance: 'Total Balance',
 
   // Settings.tsx
   monthlyBudget: 'Monthly Budget', // Legacy, now budgetSettings

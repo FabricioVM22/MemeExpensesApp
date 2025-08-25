@@ -3,6 +3,7 @@ import { TranslationKey } from "./en";
 
 export const es: Record<TranslationKey, string> = {
   // General
+  currencySymbol: '₡',
   income: 'Ingresos',
   expense: 'Gasto',
   expenses: 'Gastos',
@@ -34,6 +35,7 @@ export const es: Record<TranslationKey, string> = {
   // BottomNav.tsx
   dashboard: 'Panel',
   analytics: 'Análisis',
+  history: 'Historial',
   
   // Dashboard.tsx
   currentBalance: 'Balance Actual',
@@ -50,6 +52,10 @@ export const es: Record<TranslationKey, string> = {
   spendingVsBudget: 'Gastos vs Presupuesto',
   tooltipSpent: 'Gastado: ${amount}',
   tooltipBudget: 'Presupuesto: ${amount}',
+
+  // History.tsx
+  noHistory: 'No se encontraron registros de meses pasados.',
+  totalBalance: 'Balance Total',
 
   // Settings.tsx
   monthlyBudget: 'Presupuesto Mensual',

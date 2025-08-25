@@ -23,4 +23,5 @@ export enum View {
   Dashboard = 'dashboard',
   Analytics = 'analytics',
   Settings = 'settings',
+  History = 'history',
 }
