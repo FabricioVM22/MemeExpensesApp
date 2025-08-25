@@ -4,6 +4,7 @@ import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
 import { ChevronDownIcon, ChevronUpIcon } from './icons';
+import { PALETTE } from '../theme';
 
 interface HistoryProps {
   transactions: Transaction[];
@@ -62,7 +63,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
         return (
             <div className="text-center py-10 px-4">
                 <h2 className="text-xl font-semibold mb-2">{t('history')}</h2>
-                <p className="text-[#56445d] dark:text-[#8fbc94]">
+                <p className="text-text-secondary">
                     {t('noHistory')}
                 </p>
             </div>
@@ -76,7 +77,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                 const balance = data.income - data.expenses;
                 const isExpanded = expandedMonth === data.month;
                 return (
-                    <div key={data.month} className="bg-white dark:bg-[#56445d] rounded-lg shadow">
+                    <div key={data.month} className="bg-surface rounded-lg shadow">
                         <button 
                             className="w-full p-4 text-left flex justify-between items-center"
                             onClick={() => setExpandedMonth(isExpanded ? null : data.month)}
@@ -84,25 +85,25 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                         >
                             <div>
                                 <h3 className="font-bold text-lg">{formatMonth(data.month)}</h3>
-                                <p className={`text-sm ${balance >= 0 ? 'text-[#6da34d]' : 'text-red-500'}`}>
+                                <p className={`text-sm ${balance >= 0 ? 'text-success' : 'text-danger'}`}>
                                     {t('totalBalance')}: {t('currencySymbol')}{balance.toFixed(2)}
                                 </p>
                             </div>
                             {isExpanded ? <ChevronUpIcon className="w-6 h-6"/> : <ChevronDownIcon className="w-6 h-6"/>}
                         </button>
                         {isExpanded && (
-                            <div className="px-4 pb-4 space-y-3 border-t border-gray-200 dark:border-[#6b5873]">
+                            <div className="px-4 pb-4 space-y-3 border-t border-border">
                                 <div className="flex justify-between text-center pt-3">
                                     <div>
-                                      <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('income')}</p>
-                                      <p className="text-md font-semibold text-[#6da34d]">{t('currencySymbol')}{data.income.toFixed(2)}</p>
+                                      <p className="text-sm text-text-secondary">{t('income')}</p>
+                                      <p className="text-md font-semibold text-success">{t('currencySymbol')}{data.income.toFixed(2)}</p>
                                     </div>
                                     <div>
-                                      <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('expenses')}</p>
-                                      <p className="text-md font-semibold text-red-500">{t('currencySymbol')}{data.expenses.toFixed(2)}</p>
+                                      <p className="text-sm text-text-secondary">{t('expenses')}</p>
+                                      <p className="text-md font-semibold text-danger">{t('currencySymbol')}{data.expenses.toFixed(2)}</p>
                                     </div>
                                 </div>
-                                <h4 className="font-semibold pt-2 border-t border-gray-200 dark:border-[#6b5873]">{t('recentTransactions')}</h4>
+                                <h4 className="font-semibold pt-2 border-t border-border">{t('recentTransactions')}</h4>
                                 {data.transactions.map(transaction => {
                                     const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
                                     let displayName: string;
@@ -110,10 +111,10 @@ export default function History({ transactions, categories }: HistoryProps): Rea
 
                                     if (transaction.type === 'income') {
                                         displayName = t('income');
-                                        displayColor = '#6da34d'; // Asparagus
+                                        displayColor = PALETTE.mint; 
                                     } else {
                                         displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
-                                        displayColor = category ? category.color : '#b7b7a4';
+                                        displayColor = category ? category.color : '#a8a29e';
                                     }
 
                                     return (
@@ -122,10 +123,10 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                                                 <CategoryIcon color={displayColor} categoryName={displayName}/>
                                                 <div>
                                                     <p className="font-semibold">{transaction.description}</p>
-                                                    <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{displayName}</p>
+                                                    <p className="text-sm text-text-secondary">{displayName}</p>
                                                 </div>
                                             </div>
-                                            <p className={`font-bold ${transaction.type === 'income' ? 'text-[#6da34d]' : 'text-red-500'}`}>
+                                            <p className={`font-bold ${transaction.type === 'income' ? 'text-success' : 'text-danger'}`}>
                                                 {transaction.type === 'income' ? '+' : '-'}{t('currencySymbol')}{transaction.amount.toFixed(2)}
                                             </p>
                                         </div>

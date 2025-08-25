@@ -12,8 +12,8 @@ interface CategoryModalProps {
 }
 
 const COLORS = [
-  '#84a98c', '#a5a58d', '#f28482', '#8d99ae', '#52b69a', '#fca311', '#f7b267', '#6d6875',
-  '#bde0fe', '#ffc6ff', '#f1faee', '#e63946', '#a8dadc', '#457b9d', '#1d3557', '#e9c46a'
+  '#ef4444', '#f97316', '#eab308', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#6b7280', 
+  '#f43f5e', '#d97706', '#65a30d', '#059669', '#0ea5e9', '#6366f1', '#d946ef', '#78716c'
 ];
 
 export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit }: CategoryModalProps): React.ReactNode {
@@ -53,31 +53,31 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white dark:bg-[#56445d] rounded-lg shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
+      <div className="bg-surface rounded-lg shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <h2 className="text-xl font-bold text-center">{categoryToEdit ? t('editCategory') : t('addCategory')}</h2>
 
           <div>
-            <label htmlFor="category-name" className="block text-sm font-medium text-[#56445d] dark:text-[#c5e99b]">{t('categoryName')}</label>
+            <label htmlFor="category-name" className="block text-sm font-medium text-text-secondary">{t('categoryName')}</label>
             <input
               type="text"
               id="category-name"
               value={name}
               onChange={e => setName(e.target.value)}
-              className="mt-1 w-full bg-slate-100 dark:bg-[#493a50] border-transparent rounded-md p-2 focus:ring-2 focus:ring-[#548687] focus:outline-none"
+              className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
               placeholder={t('category_groceries')}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#56445d] dark:text-[#c5e99b]">{t('categoryColor')}</label>
+            <label className="block text-sm font-medium text-text-secondary">{t('categoryColor')}</label>
             <div className="mt-2 grid grid-cols-8 gap-2">
               {COLORS.map(c => (
                 <button
                   type="button"
                   key={c}
                   onClick={() => setColor(c)}
-                  className={`w-full aspect-square rounded-full transition-transform transform hover:scale-110 ${color === c ? 'ring-2 ring-[#548687] ring-offset-2 ring-offset-white dark:ring-offset-[#56445d]' : ''}`}
+                  className={`w-full aspect-square rounded-full transition-transform transform hover:scale-110 ${color === c ? 'ring-2 ring-primary ring-offset-2 ring-offset-surface' : ''}`}
                   style={{ backgroundColor: c }}
                   aria-label={c}
                 />
@@ -86,8 +86,8 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
           </div>
           
           <div className="flex justify-end space-x-3 pt-2">
-            <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-slate-200 dark:bg-[#493a50] hover:bg-slate-300 dark:hover:bg-[#6b5873] transition-colors">{t('cancel')}</button>
-            <button type="submit" className="py-2 px-6 rounded-lg bg-[#548687] text-white font-bold hover:bg-[#4a7879] transition-colors">{t('save')}</button>
+            <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-input hover:bg-border transition-colors">{t('cancel')}</button>
+            <button type="submit" className="py-2 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary-hover transition-colors">{t('save')}</button>
           </div>
         </form>
       </div>

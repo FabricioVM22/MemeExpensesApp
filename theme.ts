@@ -1,53 +1,58 @@
+
 // theme.ts
 
 /**
  * Centralizes the color palette for the SimpliFi app.
- * This new theme is based on a nature-inspired palette.
+ * This file defines the core color palette and semantic theme objects for light and dark modes.
+ * HSL values are used to allow for easy color manipulation with CSS variables.
  */
 
+// Core color palette defined as HSL strings (Hue Saturation Lightness).
 export const PALETTE = {
-  asparagus: '#6da34d',
-  englishViolet: '#56445d',
-  darkCyan: '#548687',
-  cambridgeBlue: '#8fbc94',
-  teaGreen: '#c5e99b',
-  danger: '#ef4444', // A consistent red for expenses/warnings
+  nyanza: '135 58% 91%',
+  celadon: '141 44% 81%',
+  celadon2: '145 49% 71%',
+  mint: '148 40% 62%',
+  mint2: '150 41% 52%',
+  seaGreen: '155 39% 41%',
+  dartmouthGreen: '157 41% 30%',
+  brunswickGreen: '158 44% 18%',
+  darkGreen: '161 62% 7%',
+  danger: '0 84% 60%',
+  white: '0 0% 100%',
+  slate100: '210 40% 96%',
 };
 
-export const theme = {
-  colors: {
-    // Primary accent color used for buttons, highlights, and important elements.
-    primary: PALETTE.darkCyan,
-    primaryHover: '#4a7879', // A manually darkened version of primary
-
-    // Gradient colors for the main heading.
-    gradient: {
-      from: PALETTE.darkCyan,
-      to: PALETTE.asparagus,
-    },
-
-    // Color for indicating success or positive actions (e.g., income).
-    success: PALETTE.asparagus,
-
-    // Color for indicating errors, warnings, or negative actions (e.g., expenses).
-    danger: PALETTE.danger,
-    
-    // Specific color schemes for light and dark UI modes.
-    light: {
-      background: '#f8fafc',     // A clean, almost-white background
-      surface: '#ffffff',        // Card and modal backgrounds
-      textPrimary: '#3a2e40',    // A darker shade of English Violet for readability
-      textSecondary: PALETTE.englishViolet, // Subdued text for descriptions
-      border: '#e4eade',         // A very light, muted green for borders
-      input: '#f1f5f9',          // A standard light grey for inputs
-    },
-    dark: {
-      background: '#3a2e40',     // A darker English Violet for the main background
-      surface: PALETTE.englishViolet, // Card and modal backgrounds
-      textPrimary: '#f0fdf4',    // A very light, soft green for primary text
-      textSecondary: PALETTE.cambridgeBlue, // Subdued text for descriptions
-      border: '#6b5873',         // A lighter shade of the surface for borders
-      input: '#493a50',          // A distinct dark shade for inputs
-    },
-  },
+// Maps the palette to semantic roles for the light theme.
+export const lightTheme = {
+  background: PALETTE.nyanza,
+  surface: PALETTE.white,
+  primary: PALETTE.mint2,
+  primaryHover: PALETTE.seaGreen,
+  success: PALETTE.mint,
+  danger: PALETTE.danger,
+  textPrimary: PALETTE.brunswickGreen,
+  textSecondary: PALETTE.seaGreen,
+  border: PALETTE.celadon,
+  input: PALETTE.slate100,
+  gradientFrom: PALETTE.seaGreen,
+  gradientTo: PALETTE.mint2,
 };
+
+// Maps the palette to semantic roles for the dark theme.
+export const darkTheme = {
+  background: PALETTE.darkGreen,
+  surface: PALETTE.brunswickGreen,
+  primary: PALETTE.mint2,
+  primaryHover: PALETTE.seaGreen,
+  success: PALETTE.mint,
+  danger: PALETTE.danger,
+  textPrimary: PALETTE.nyanza,
+  textSecondary: PALETTE.celadon2,
+  border: PALETTE.dartmouthGreen,
+  input: PALETTE.dartmouthGreen,
+  gradientFrom: PALETTE.seaGreen,
+  gradientTo: PALETTE.mint2,
+};
+
+export type Theme = typeof lightTheme;

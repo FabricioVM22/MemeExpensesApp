@@ -9,19 +9,36 @@
     <script>
       tailwind.config = {
         darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: 'hsl(var(--background))',
+              surface: 'hsl(var(--surface))',
+              primary: 'hsl(var(--primary))',
+              'primary-hover': 'hsl(var(--primary-hover))',
+              success: 'hsl(var(--success))',
+              danger: 'hsl(var(--danger))',
+              'text-primary': 'hsl(var(--text-primary))',
+              'text-secondary': 'hsl(var(--text-secondary))',
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+            }
+          }
+        }
       }
     </script>
     <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style id="app-theme"></style>
     <style>
       body {
         overscroll-behavior-y: contain;
         font-family: 'Poppins', sans-serif;
       }
       .text-gradient {
-        background-image: linear-gradient(to right, #548687, #6da34d);
+        background-image: linear-gradient(to right, hsl(var(--gradient-from)), hsl(var(--gradient-to)));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;

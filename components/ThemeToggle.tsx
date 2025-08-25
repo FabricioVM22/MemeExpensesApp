@@ -15,7 +15,7 @@ export default function ThemeToggle({ theme, setTheme }: ThemeToggleProps): Reac
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full text-[#56445d] dark:text-[#8fbc94] hover:bg-slate-100 dark:hover:bg-[#493a50] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#548687] dark:focus:ring-offset-[#3a2e40]"
+      className="p-2 rounded-full text-text-secondary hover:bg-border/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ring-offset-background"
       aria-label="Toggle theme"
     >
       {theme === 'light' ? (

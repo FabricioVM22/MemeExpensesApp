@@ -93,16 +93,16 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
       {/* Budget Settings */}
       <section>
         <h2 className="text-xl font-semibold mb-2">{t('budgetSettings')}</h2>
-        <p className="text-sm text-[#56445d] dark:text-[#8fbc94] mb-4">{t('budgetSettingsDesc')}</p>
-        <div className="bg-white dark:bg-[#56445d] rounded-lg shadow p-4 space-y-4">
-            <div className="flex justify-between items-center bg-slate-100 dark:bg-[#493a50] p-3 rounded-lg">
+        <p className="text-sm text-text-secondary mb-4">{t('budgetSettingsDesc')}</p>
+        <div className="bg-surface rounded-lg shadow p-4 space-y-4">
+            <div className="flex justify-between items-center bg-background p-3 rounded-lg">
                 <div>
-                    <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('totalIncome')}</p>
-                    <p className="font-bold text-[#6da34d] text-lg">{t('currencySymbol')}{totalIncome.toFixed(2)}</p>
+                    <p className="text-sm text-text-secondary">{t('totalIncome')}</p>
+                    <p className="font-bold text-success text-lg">{t('currencySymbol')}{totalIncome.toFixed(2)}</p>
                 </div>
                 <div>
-                    <p className="text-sm text-[#56445d] dark:text-[#8fbc94]">{t('totalBudgeted')}</p>
-                    <p className={`font-bold text-lg ${totalBudgeted > totalIncome ? 'text-red-500' : 'text-[#548687]'}`}>
+                    <p className="text-sm text-text-secondary">{t('totalBudgeted')}</p>
+                    <p className={`font-bold text-lg ${totalBudgeted > totalIncome ? 'text-danger' : 'text-primary'}`}>
                         {t('currencySymbol')}{totalBudgeted.toFixed(2)}
                     </p>
                 </div>
@@ -112,33 +112,33 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
               <div className="w-6 h-6 rounded-full" style={{ backgroundColor: category.color }}></div>
               <label htmlFor={`budget-${category.id}`} className="flex-1 font-medium">{category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name}</label>
               <div className="flex items-center">
-                <span className="text-[#56445d] dark:text-[#8fbc94] mr-2">{t('currencySymbol')}</span>
-                <input id={`budget-${category.id}`} type="number" placeholder="0.00" value={localBudgets[category.id] || ''} onChange={(e) => handleBudgetChange(category.id, e.target.value)} className="w-28 bg-slate-100 dark:bg-[#493a50] rounded-md p-2 text-right focus:ring-2 focus:ring-[#548687] focus:outline-none"/>
+                <span className="text-text-secondary mr-2">{t('currencySymbol')}</span>
+                <input id={`budget-${category.id}`} type="number" placeholder="0.00" value={localBudgets[category.id] || ''} onChange={(e) => handleBudgetChange(category.id, e.target.value)} className="w-28 bg-input rounded-md p-2 text-right focus:ring-2 focus:ring-primary focus:outline-none"/>
               </div>
             </div>
           ))}
-          <button onClick={handleSaveBudgets} className="w-full bg-[#548687] text-white font-bold py-3 px-4 rounded-lg hover:bg-[#4a7879] transition-colors focus:outline-none focus:ring-2 focus:ring-[#548687] focus:ring-opacity-50">{t('saveBudget')}</button>
+          <button onClick={handleSaveBudgets} className="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-primary-hover transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">{t('saveBudget')}</button>
         </div>
       </section>
 
       {/* Category Management */}
       <section>
         <h2 className="text-xl font-semibold mb-2">{t('manageCategories')}</h2>
-        <p className="text-sm text-[#56445d] dark:text-[#8fbc94] mb-4">{t('manageCategoriesDesc')}</p>
-        <div className="bg-white dark:bg-[#56445d] rounded-lg shadow p-4 space-y-3">
+        <p className="text-sm text-text-secondary mb-4">{t('manageCategoriesDesc')}</p>
+        <div className="bg-surface rounded-lg shadow p-4 space-y-3">
           {categories.map(category => (
-            <div key={category.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-[#493a50]/50">
+            <div key={category.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-background">
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full" style={{ backgroundColor: category.color }}></div>
                 <span className="font-medium">{category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name}</span>
               </div>
               <div className="flex items-center space-x-3">
-                <button onClick={() => handleOpenEditModal(category)} aria-label={t('editCategory')} className="text-slate-500 hover:text-[#548687]"><EditIcon className="w-5 h-5"/></button>
-                <button onClick={() => handleDeleteCategory(category.id)} disabled={category.id === 'other'} aria-label={t('deleteCategory')} className="text-slate-500 hover:text-red-500 disabled:opacity-30 disabled:hover:text-slate-500"><TrashIcon className="w-5 h-5"/></button>
+                <button onClick={() => handleOpenEditModal(category)} aria-label={t('editCategory')} className="text-text-secondary hover:text-primary"><EditIcon className="w-5 h-5"/></button>
+                <button onClick={() => handleDeleteCategory(category.id)} disabled={category.id === 'other'} aria-label={t('deleteCategory')} className="text-text-secondary hover:text-danger disabled:opacity-30 disabled:hover:text-text-secondary"><TrashIcon className="w-5 h-5"/></button>
               </div>
             </div>
           ))}
-           <button onClick={handleOpenAddModal} className="w-full border-2 border-dashed border-slate-300 dark:border-slate-600 text-slate-500 dark:text-[#8fbc94] font-semibold py-2 px-4 rounded-lg hover:bg-slate-100 dark:hover:bg-[#493a50] hover:border-[#548687]/50 dark:hover:border-[#548687] hover:text-[#548687] dark:hover:text-[#c5e99b] transition-colors">
+           <button onClick={handleOpenAddModal} className="w-full border-2 border-dashed border-border text-text-secondary font-semibold py-2 px-4 rounded-lg hover:bg-background hover:border-primary/50 hover:text-primary transition-colors">
             {t('addCategory')}
           </button>
         </div>
@@ -147,14 +147,14 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
        {/* Notifications */}
        <section>
         <h2 className="text-xl font-semibold mb-2">{t('notifications')}</h2>
-        <p className="text-sm text-[#56445d] dark:text-[#8fbc94] mb-4">{t('notificationsDesc')}</p>
-        <div className="bg-white dark:bg-[#56445d] rounded-lg shadow p-4">
+        <p className="text-sm text-text-secondary mb-4">{t('notificationsDesc')}</p>
+        <div className="bg-surface rounded-lg shadow p-4">
             <label htmlFor="notif-frequency" className="block font-medium mb-2">{t('notificationFrequency')}</label>
             <select
                 id="notif-frequency"
                 value={notificationFrequency}
                 onChange={e => setNotificationFrequency(e.target.value)}
-                className="w-full bg-slate-100 dark:bg-[#493a50] border-transparent rounded-md p-2 focus:ring-2 focus:ring-[#548687] focus:outline-none"
+                className="w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
               >
                 <option value="monthly">{t('freq_monthly')}</option>
                 <option value="weekly">{t('freq_weekly')}</option>

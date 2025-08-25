@@ -11,17 +11,17 @@ interface BottomNavProps {
 }
 
 const NavItem = ({ icon, label, isActive, onClick }: { icon: React.ReactNode, label: string, isActive: boolean, onClick: () => void }) => (
-  <button onClick={onClick} className={`flex flex-col items-center justify-center w-full pt-2 pb-1 transition-colors duration-200 ${isActive ? 'text-[#548687]' : 'text-[#56445d] dark:text-[#8fbc94] hover:text-[#548687] dark:hover:text-[#c5e99b]'}`}>
+  <button onClick={onClick} className={`flex flex-col items-center justify-center w-full pt-2 pb-1 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-text-secondary hover:text-primary'}`}>
     {icon}
     <span className="text-xs mt-1">{label}</span>
-    {isActive && <div className="w-1/2 h-0.5 bg-[#548687] mt-1 rounded-full"></div>}
+    {isActive && <div className="w-1/2 h-0.5 bg-primary mt-1 rounded-full"></div>}
   </button>
 );
 
 export default function BottomNav({ activeView, setActiveView }: BottomNavProps): React.ReactNode {
   const { t } = useLocalization();
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-white/80 dark:bg-[#56445d]/80 backdrop-blur-sm border-t border-gray-200 dark:border-[#6b5873] flex justify-around max-w-lg mx-auto shadow-top z-10">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-sm border-t border-border flex justify-around max-w-lg mx-auto shadow-top z-10">
       <NavItem
         icon={<HomeIcon className="w-6 h-6" />}
         label={t('dashboard')}
