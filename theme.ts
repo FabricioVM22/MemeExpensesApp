@@ -9,7 +9,7 @@
 
 // Core color palette defined as HSL strings (Hue Saturation Lightness).
 export const PALETTE = {
-  nyanza: '135 58% 91%',
+  nyanza: '46, 15%, 83%',
   celadon: '141 44% 81%',
   celadon2: '145 49% 71%',
   mint: '148 40% 62%',
@@ -17,7 +17,7 @@ export const PALETTE = {
   seaGreen: '155 39% 41%',
   dartmouthGreen: '157 41% 30%',
   brunswickGreen: '158 44% 18%',
-  darkGreen: '161 62% 7%',
+  darkGreen: '46, 15%, 30%',
   danger: '0 84% 60%',
   white: '0 0% 100%',
   slate100: '210 40% 96%',
