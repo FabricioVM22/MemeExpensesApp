@@ -64,7 +64,15 @@ export default function Analytics({ transactions, budget, categories }: Analytic
                     {t('currencySymbol')}{data.spent.toFixed(2)} / {t('currencySymbol')}{data.budget.toFixed(2)}
                   </span>
                 </div>
-                <div className="w-full bg-input rounded-full h-4 relative overflow-hidden" role="progressbar" aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100} aria-label={`${data.name} spending`}>
+                <div
+                  className="w-full bg-input rounded-full h-4 relative overflow-hidden"
+                  role="progressbar"
+                  aria-valuenow={data.spent}
+                  aria-valuemin={0}
+                  aria-valuemax={data.budget > 0 ? data.budget : data.spent}
+                  aria-label={`${data.name} spending`}
+                  aria-valuetext={`${t('currencySymbol')}${data.spent.toFixed(2)} / ${t('currencySymbol')}${data.budget.toFixed(2)}`}
+                >
                   <div 
                     className="h-4 rounded-full transition-all duration-500" 
                     style={{ 
