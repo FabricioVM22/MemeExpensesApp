@@ -1,8 +1,7 @@
-
 // theme.ts
 
 /**
- * Centralizes the color palette for the SimpliFi app.
+ * Centralizes the color palette for the Meme Budget app.
  * This file defines the core color palette and semantic theme objects for light and dark modes.
  * HSL values are used to allow for easy color manipulation with CSS variables.
  */

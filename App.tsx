@@ -90,7 +90,7 @@ export default function App(): React.ReactNode {
       <div className="relative pb-24 max-w-lg mx-auto">
         <header className="p-4 flex justify-between items-center border-b border-border">
           <div className="w-8"></div> {/* Spacer */}
-          <h1 className="text-2xl font-bold text-center text-gradient">SimpliFi</h1>
+          <h1 className="text-2xl font-bold text-center text-gradient">Meme Budget</h1>
           <ThemeToggle theme={appTheme} setTheme={setAppTheme} />
         </header>
 
