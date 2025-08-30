@@ -68,7 +68,7 @@ export default function App(): React.ReactNode {
       case View.Dashboard:
         return <Dashboard transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} setActiveView={setActiveView} />;
       case View.Analytics:
-        return <Analytics transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} theme={appTheme} />;
+        return <Analytics transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} />;
       case View.History:
         return <History transactions={transactions} categories={categories} />;
       case View.Settings:

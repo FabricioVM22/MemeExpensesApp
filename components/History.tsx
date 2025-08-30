@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
-import { ChevronDownIcon, ChevronUpIcon } from './icons';
+import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon } from './icons';
 import { PALETTE } from '../theme';
 
 interface HistoryProps {
@@ -20,6 +20,7 @@ const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: st
 export default function History({ transactions, categories }: HistoryProps): React.ReactNode {
     const { t, locale } = useLocalization();
     const [expandedMonth, setExpandedMonth] = useState<string | null>(null);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
     const getCategory = (id: string | undefined) => categories.find(c => c.id === id);
 
@@ -103,8 +104,24 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                                       <p className="text-md font-semibold text-danger">{t('currencySymbol')}{data.expenses.toFixed(2)}</p>
                                     </div>
                                 </div>
-                                <h4 className="font-semibold pt-2 border-t border-border">{t('recentTransactions')}</h4>
-                                {data.transactions.map(transaction => {
+                                <div className="flex justify-between items-center pt-2 border-t border-border">
+                                    <h4 className="font-semibold">{t('recentTransactions')}</h4>
+                                    <button
+                                        onClick={() => setSortOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
+                                        className="flex items-center space-x-1 text-sm text-text-secondary hover:text-primary transition-colors p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                        aria-label={t('sortByDate')}
+                                    >
+                                        <ArrowUpDownIcon className="w-4 h-4" />
+                                        <span>{sortOrder === 'desc' ? t('sortNewestFirst') : t('sortOldestFirst')}</span>
+                                    </button>
+                                </div>
+                                {[...data.transactions]
+                                    .sort((a, b) => {
+                                        const dateA = new Date(a.date).getTime();
+                                        const dateB = new Date(b.date).getTime();
+                                        return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+                                    })
+                                    .map(transaction => {
                                     const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
                                     let displayName: string;
                                     let displayColor: string;

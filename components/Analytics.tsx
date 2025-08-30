@@ -3,51 +3,15 @@ import React, { useMemo } from 'react';
 import { Transaction, Budget, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
-import { PALETTE } from '../theme';
-
-// Tell TypeScript that window.Recharts exists
-declare global {
-  interface Window {
-    Recharts: any;
-  }
-}
 
 interface AnalyticsProps {
   transactions: Transaction[];
   budget: Budget[];
   categories: Category[];
-  theme: 'light' | 'dark';
 }
 
-const CustomTooltip = ({ active, payload, label, t }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-surface p-2 border border-border rounded shadow">
-          <p className="font-bold text-text-primary">{label}</p>
-          <p className="text-danger">{t('tooltipSpent', { amount: `${t('currencySymbol')}${data.spent.toFixed(2)}` })}</p>
-          <p style={{ color: PALETTE.mint2 }}>{t('tooltipBudget', { amount: `${t('currencySymbol')}${data.budget.toFixed(2)}` })}</p>
-        </div>
-      );
-    }
-  
-    return null;
-  };
-
-export default function Analytics({ transactions, budget, categories, theme }: AnalyticsProps): React.ReactNode {
+export default function Analytics({ transactions, budget, categories }: AnalyticsProps): React.ReactNode {
   const { t } = useLocalization();
-  
-  // Guard against Recharts not being loaded yet from the CDN
-  if (typeof window === 'undefined' || !window.Recharts) {
-    return (
-        <div className="flex items-center justify-center h-96 bg-surface rounded-lg shadow">
-            <p className="text-text-secondary">{t('loadingCharts')}</p>
-        </div>
-    );
-  }
-  
-  // Recharts is loaded from CDN in index.html, destructure it here inside the component
-  const { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Cell } = window.Recharts;
 
   const expenses = useMemo(() => transactions.filter(t => t.type === 'expense'), [transactions]);
 
@@ -64,7 +28,12 @@ export default function Analytics({ transactions, budget, categories, theme }: A
         budget: categoryBudget,
         color: category.color,
       };
-    }).filter(d => d.budget > 0 || d.spent > 0);
+    }).filter(d => d.budget > 0 || d.spent > 0)
+    .sort((a, b) => {
+        const percentA = a.budget > 0 ? a.spent / a.budget : (a.spent > 0 ? Infinity : 0);
+        const percentB = b.budget > 0 ? b.spent / b.budget : (b.spent > 0 ? Infinity : 0);
+        return percentB - percentA;
+    });
   }, [categories, budget, expenses, t]);
 
   if (spendingData.length === 0) {
@@ -78,28 +47,40 @@ export default function Analytics({ transactions, budget, categories, theme }: A
     );
   }
 
-  const axisColor = theme === 'dark' ? PALETTE.celadon2 : PALETTE.seaGreen;
-
   return (
     <div className="space-y-8">
       <div>
         <h2 className="text-xl font-semibold mb-4 text-center">{t('spendingVsBudget')}</h2>
-        <div className="bg-surface rounded-lg shadow p-4 h-96">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={spendingData} layout="vertical" margin={{ top: 5, right: 20, left: 50, bottom: 5 }}>
-              <XAxis type="number" stroke={axisColor} />
-              <YAxis dataKey="name" type="category" stroke={axisColor} width={80} />
-              <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: 'hsl(var(--primary) / 0.1)' }} />
-              <Legend />
-              <Bar dataKey="budget" fill={PALETTE.mint2} name={t('budget')} radius={[0, 4, 4, 0]} background={{ fill: 'hsl(var(--primary) / 0.2)', radius: 4 }}/>
-              <Bar dataKey="spent" name={t('spent')}>
-                {spendingData.map((entry, index) => {
-                  const isOverBudget = entry.spent > entry.budget && entry.budget > 0;
-                  return <Cell key={`cell-${index}`} fill={isOverBudget ? PALETTE.danger : entry.color} />;
-                })}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="bg-surface rounded-lg shadow p-4 sm:p-6 space-y-6">
+          {spendingData.map((data) => {
+            const isOverBudget = data.budget > 0 && data.spent > data.budget;
+            const percentage = data.budget > 0 ? Math.min((data.spent / data.budget) * 100, 100) : (data.spent > 0 ? 100 : 0);
+            
+            return (
+              <div key={data.name}>
+                <div className="flex justify-between items-baseline mb-1">
+                  <span className="font-medium text-text-primary">{data.name}</span>
+                  <span className="text-sm text-text-secondary whitespace-nowrap">
+                    {t('currencySymbol')}{data.spent.toFixed(2)} / {t('currencySymbol')}{data.budget.toFixed(2)}
+                  </span>
+                </div>
+                <div className="w-full bg-input rounded-full h-4 relative overflow-hidden" role="progressbar" aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100} aria-label={`${data.name} spending`}>
+                  <div 
+                    className="h-4 rounded-full transition-all duration-500" 
+                    style={{ 
+                        width: `${percentage}%`, 
+                        backgroundColor: isOverBudget ? 'hsl(var(--danger))' : data.color
+                    }}
+                  ></div>
+                </div>
+                {isOverBudget && (
+                  <p className="text-right text-xs text-danger mt-1">
+                    {t('overBudgetWarning', {amount: `${t('currencySymbol')}${(data.spent - data.budget).toFixed(2)}`})}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

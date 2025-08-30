@@ -44,16 +44,17 @@ export const en = {
   noTransactions: 'No transactions this month.',
 
   // Analytics.tsx
-  loadingCharts: 'Loading Charts...',
   spendingAnalytics: 'Spending Analytics',
   noSpendingData: 'No spending data available for this month. Add some expenses or set a budget to see your analytics.',
   spendingVsBudget: 'Spending vs Budget',
-  tooltipSpent: 'Spent: ${amount}',
-  tooltipBudget: 'Budget: ${amount}',
+  overBudgetWarning: '${amount} over budget',
 
   // History.tsx
   noHistory: 'No past monthly records found.',
   totalBalance: 'Total Balance',
+  sortByDate: 'Sort by date',
+  sortNewestFirst: 'Newest first',
+  sortOldestFirst: 'Oldest first',
 
   // Settings.tsx
   monthlyBudget: 'Monthly Budget', // Legacy, now budgetSettings

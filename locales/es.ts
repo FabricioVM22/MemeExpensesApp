@@ -46,16 +46,17 @@ export const es: Record<TranslationKey, string> = {
   noTransactions: 'No hay transacciones este mes.',
 
   // Analytics.tsx
-  loadingCharts: 'Cargando Gráficos...',
   spendingAnalytics: 'Análisis de Gastos',
   noSpendingData: 'No hay datos de gastos disponibles para este mes. Añade algunos gastos o establece un presupuesto para ver tus análisis.',
   spendingVsBudget: 'Gastos vs Presupuesto',
-  tooltipSpent: 'Gastado: ${amount}',
-  tooltipBudget: 'Presupuesto: ${amount}',
+  overBudgetWarning: '${amount} sobre el presupuesto',
 
   // History.tsx
   noHistory: 'No se encontraron registros de meses pasados.',
   totalBalance: 'Balance Total',
+  sortByDate: 'Ordenar por fecha',
+  sortNewestFirst: 'Más recientes primero',
+  sortOldestFirst: 'Más antiguos primero',
 
   // Settings.tsx
   monthlyBudget: 'Presupuesto Mensual',
