@@ -1,3 +1,8 @@
+/**
+ * @file Renders the settings view for the application.
+ * This component allows users to manage their monthly budgets,
+ * add/edit/delete categories, and set notification preferences.
+ */
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { Budget, Category, Transaction } from '../types';
@@ -7,23 +12,43 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import CategoryModal from './CategoryModal';
 import { EditIcon, TrashIcon } from './icons';
 
+/**
+ * Props for the Settings component.
+ */
 interface SettingsProps {
+  /** The list of all available categories. */
   categories: Category[];
+  /** Function to update the list of categories. */
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+  /** The budget settings for the current month. */
   budget: Budget[];
+  /** Function to update the budget for the current month. */
   setMonthBudget: (newBudgets: Budget[]) => void;
+  /** The list of all main transactions (excluding event transactions). */
   transactions: Transaction[];
+  /** Function to update the global list of transactions. */
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
 }
 
+/**
+ * The settings component.
+ * @param {SettingsProps} props - The props for the component.
+ * @returns The rendered settings UI.
+ */
 export default function Settings({ categories, setCategories, budget, setMonthBudget, transactions, setTransactions }: SettingsProps): React.ReactNode {
   const { t } = useLocalization();
+  // Local state to manage budget input fields before saving
   const [localBudgets, setLocalBudgets] = useState<Record<string, number>>({});
   const [notificationFrequency, setNotificationFrequency] = useLocalStorage('notificationFrequency', 'monthly');
 
+  // State for category management modal
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
 
+  /**
+   * Effect to synchronize the local budget state with the global budget prop
+   * when the component mounts or the global budget changes.
+   */
   useEffect(() => {
     const budgetMap = budget.reduce((acc, b) => {
       acc[b.categoryId] = b.amount;
@@ -32,11 +57,19 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
     setLocalBudgets(budgetMap);
   }, [budget]);
 
+  /**
+   * Handles changes to a budget input field.
+   * @param {string} categoryId - The ID of the category being updated.
+   * @param {string} amount - The new budget amount from the input field.
+   */
   const handleBudgetChange = (categoryId: string, amount: string) => {
     const newAmount = parseFloat(amount) || 0;
     setLocalBudgets(prev => ({ ...prev, [categoryId]: newAmount }));
   };
 
+  /**
+   * Saves the locally edited budgets to the global state.
+   */
   const handleSaveBudgets = () => {
     const newBudgets: Budget[] = Object.entries(localBudgets)
         .map(([categoryId, amount]) => ({ categoryId, amount }))
@@ -45,26 +78,43 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
     alert(t('budgetSavedSuccess'));
   };
   
+  /**
+   * Memoized calculation for total income in the current month.
+   */
   const totalIncome = useMemo(() => {
       return transactions
           .filter(t => t.type === 'income')
           .reduce((sum, t) => sum + t.amount, 0);
   }, [transactions]);
 
+  /**
+   * Memoized calculation for the total amount budgeted across all categories.
+   */
   const totalBudgeted = useMemo(() => {
     return Object.values(localBudgets).reduce((sum, amount) => sum + amount, 0);
   }, [localBudgets]);
 
+  /**
+   * Opens the category modal in 'edit' mode.
+   * @param {Category} category - The category to be edited.
+   */
   const handleOpenEditModal = (category: Category) => {
     setCategoryToEdit(category);
     setIsCategoryModalOpen(true);
   }
 
+  /**
+   * Opens the category modal in 'add' mode.
+   */
   const handleOpenAddModal = () => {
     setCategoryToEdit(null);
     setIsCategoryModalOpen(true);
   }
 
+  /**
+   * Saves a new or edited category to the global state.
+   * @param category - The category data to save.
+   */
   const handleSaveCategory = (category: Omit<Category, 'id'> & { id?: string }) => {
     if (category.id) { // Editing existing
       setCategories(prev => prev.map(c => c.id === category.id ? { ...c, ...category} : c));
@@ -75,6 +125,10 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
     }
   };
 
+  /**
+   * Deletes a category and reassigns its transactions to 'Other'.
+   * @param {string} categoryId - The ID of the category to delete.
+   */
   const handleDeleteCategory = (categoryId: string) => {
     if (categoryId === 'other') {
       alert(t('errorDeleteOtherCategory'));
@@ -164,6 +218,7 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
         </div>
       </section>
 
+      {/* Category Modal */}
       <CategoryModal 
         isOpen={isCategoryModalOpen}
         onClose={() => setIsCategoryModalOpen(false)}

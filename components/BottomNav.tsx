@@ -1,15 +1,33 @@
-
+/**
+ * @file Renders the bottom navigation bar for mobile views.
+ * This component provides primary navigation between the main sections of the app.
+ * It is hidden on medium and larger screen sizes.
+ */
 
 import React from 'react';
 import { View } from '../types';
 import { HomeIcon, ChartIcon, CogIcon, HistoryIcon, GiftIcon } from './icons';
 import { useLocalization } from '../context/LocalizationContext';
 
+/**
+ * Props for the BottomNav component.
+ */
 interface BottomNavProps {
+  /** The currently active view. */
   activeView: View;
+  /** Function to set the active view. */
   setActiveView: (view: View) => void;
 }
 
+/**
+ * A single clickable item in the navigation bar.
+ * @param {object} props - The component props.
+ * @param {React.ReactNode} props.icon - The icon to display.
+ * @param {string} props.label - The text label for the item.
+ * @param {boolean} props.isActive - Whether this item is the currently active view.
+ * @param {() => void} props.onClick - The function to call when the item is clicked.
+ * @returns A navigation item button.
+ */
 const NavItem = ({ icon, label, isActive, onClick }: { icon: React.ReactNode, label: string, isActive: boolean, onClick: () => void }) => (
   <button onClick={onClick} className={`flex flex-col items-center justify-center w-full pt-2 pb-1 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-text-secondary hover:text-primary'}`}>
     {icon}
@@ -18,6 +36,11 @@ const NavItem = ({ icon, label, isActive, onClick }: { icon: React.ReactNode, la
   </button>
 );
 
+/**
+ * The bottom navigation component for mobile screens.
+ * @param {BottomNavProps} props - The props for the component.
+ * @returns The rendered bottom navigation bar.
+ */
 export default function BottomNav({ activeView, setActiveView }: BottomNavProps): React.ReactNode {
   const { t } = useLocalization();
   return (

@@ -1,6 +1,13 @@
+/**
+ * @file Defines constant values used throughout the application.
+ */
 
 import { Category } from './types';
 
+/**
+ * A list of default categories provided to the user on first use.
+ * Category names starting with 'category_' are treated as translation keys.
+ */
 export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'groceries', name: 'category_groceries', color: '#10b981' }, // Teal
   { id: 'transport', name: 'category_transport', color: '#3b82f6' }, // Blue

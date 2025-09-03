@@ -1,3 +1,8 @@
+/**
+ * @file Renders the history view.
+ * This component displays past months' financial summaries in an accordion layout.
+ * Users can expand each month to see detailed transactions.
+ */
 
 import React, { useMemo, useState } from 'react';
 import { Transaction, Category } from '../types';
@@ -6,28 +11,57 @@ import { TranslationKey } from '../locales/en';
 import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon } from './icons';
 import { PALETTE } from '../theme';
 
+/**
+ * Props for the History component.
+ */
 interface HistoryProps {
+  /** The list of all main transactions (excluding event transactions). */
   transactions: Transaction[];
+  /** The list of all available categories. */
   categories: Category[];
 }
 
+/**
+ * A circular icon representing a transaction category.
+ * @param {object} props - The component props.
+ * @param {string} props.color - The background color of the icon.
+ * @param {string} props.categoryName - The name of the category.
+ * @returns A category icon component.
+ */
 const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
     <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
         {categoryName.charAt(0)}
     </div>
 );
 
+/**
+ * The history component, displaying transaction history grouped by month.
+ * @param {HistoryProps} props - The props for the component.
+ * @returns The rendered history UI.
+ */
 export default function History({ transactions, categories }: HistoryProps): React.ReactNode {
     const { t, locale } = useLocalization();
+    // State to manage which month's details are currently expanded
     const [expandedMonth, setExpandedMonth] = useState<string | null>(null);
+    // State to manage the sort order of transactions within an expanded month
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
+    /**
+     * Helper function to find a category by its ID.
+     * @param {string | undefined} id - The ID of the category.
+     * @returns The category object or undefined.
+     */
     const getCategory = (id: string | undefined) => categories.find(c => c.id === id);
 
+    /**
+     * Memoized calculation to group and summarize transactions by month.
+     * It excludes the current month and sorts the past months chronologically.
+     */
     const historicalData = useMemo(() => {
         const currentMonthKey = new Date().toISOString().slice(0, 7);
         const dataByMonth: Record<string, { income: number, expenses: number, transactions: Transaction[] }> = {};
 
+        // Group transactions by month (YYYY-MM)
         transactions.forEach(t => {
             const monthKey = t.date.slice(0, 7);
             if (monthKey === currentMonthKey) return; // Skip current month
@@ -44,16 +78,23 @@ export default function History({ transactions, categories }: HistoryProps): Rea
             dataByMonth[monthKey].transactions.push(t);
         });
         
+        // Sort transactions within each month
         for (const key in dataByMonth) {
             dataByMonth[key].transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         }
         
+        // Convert the grouped data object into a sorted array
         return Object.entries(dataByMonth)
-            .sort((a, b) => b[0].localeCompare(a[0]))
+            .sort((a, b) => b[0].localeCompare(a[0])) // Sort months, newest first
             .map(([key, value]) => ({ month: key, ...value }));
 
     }, [transactions]);
 
+    /**
+     * Formats a month key (e.g., "2023-07") into a localized, readable string (e.g., "July 2023").
+     * @param {string} monthKey - The month key to format.
+     * @returns The formatted month string.
+     */
     const formatMonth = (monthKey: string) => {
         const [year, month] = monthKey.split('-');
         const date = new Date(parseInt(year), parseInt(month) - 1);
@@ -79,6 +120,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                 const isExpanded = expandedMonth === data.month;
                 return (
                     <div key={data.month} className="bg-surface rounded-lg shadow">
+                        {/* Accordion Header */}
                         <button 
                             className="w-full p-4 text-left flex justify-between items-center"
                             onClick={() => setExpandedMonth(isExpanded ? null : data.month)}
@@ -92,6 +134,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                             </div>
                             {isExpanded ? <ChevronUpIcon className="w-6 h-6"/> : <ChevronDownIcon className="w-6 h-6"/>}
                         </button>
+                        {/* Accordion Content (Expanded View) */}
                         {isExpanded && (
                             <div className="px-4 pb-4 space-y-3 border-t border-border">
                                 <div className="flex justify-between text-center pt-3">
@@ -115,6 +158,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                                         <span>{sortOrder === 'desc' ? t('sortNewestFirst') : t('sortOldestFirst')}</span>
                                     </button>
                                 </div>
+                                {/* List of transactions for the month */}
                                 {[...data.transactions]
                                     .sort((a, b) => {
                                         const dateA = new Date(a.date).getTime();

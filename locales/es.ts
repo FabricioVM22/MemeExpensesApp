@@ -1,3 +1,8 @@
+/**
+ * @file Spanish translation strings for the Meme Budget application.
+ * This file contains a key-value map of all the Spanish text used in the UI,
+ * mirroring the structure of the English translation file.
+ */
 
 import { TranslationKey } from "./en";
 

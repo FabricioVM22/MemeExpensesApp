@@ -1,12 +1,13 @@
-// theme.ts
-
 /**
- * Centralizes the color palette for the Meme Budget app.
- * This file defines the core color palette and semantic theme objects for light and dark modes.
- * HSL values are used to allow for easy color manipulation with CSS variables.
+ * @file Centralizes the color palette and theme definitions for the Meme Budget app.
+ * This file defines the core colors and maps them to semantic roles for both
+ * light and dark modes, which are then used to generate CSS custom properties.
  */
 
-// Core color palette defined as HSL strings (Hue Saturation Lightness).
+/**
+ * The core color palette defined as HSL strings (Hue, Saturation, Lightness).
+ * Using HSL makes it easy to manipulate colors (e.g., adjust lightness for hover states).
+ */
 export const PALETTE = {
   nyanza: '46, 15%, 83%',
   celadon: '141 44% 81%',
@@ -22,7 +23,10 @@ export const PALETTE = {
   slate100: '210 40% 96%',
 };
 
-// Maps the palette to semantic roles for the light theme.
+/**
+ * Maps the core palette to semantic color roles for the light theme.
+ * These keys will be converted to CSS custom properties (e.g., `--background`).
+ */
 export const lightTheme = {
   background: PALETTE.nyanza,
   surface: PALETTE.white,
@@ -38,7 +42,9 @@ export const lightTheme = {
   gradientTo: PALETTE.mint2,
 };
 
-// Maps the palette to semantic roles for the dark theme.
+/**
+ * Maps the core palette to semantic color roles for the dark theme.
+ */
 export const darkTheme = {
   background: PALETTE.darkGreen,
   surface: PALETTE.brunswickGreen,
@@ -54,4 +60,7 @@ export const darkTheme = {
   gradientTo: PALETTE.mint2,
 };
 
+/**
+ * A type representing the structure of a theme object.
+ */
 export type Theme = typeof lightTheme;

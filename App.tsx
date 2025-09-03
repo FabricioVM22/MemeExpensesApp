@@ -1,3 +1,9 @@
+/**
+ * @file The main component of the Meme Budget application.
+ * This component orchestrates the entire application's state, navigation,
+ * and view rendering. It manages transactions, categories, budgets, events,
+ * and theme settings.
+ */
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
@@ -20,10 +26,19 @@ import { lightTheme, darkTheme } from './theme';
 import { generateThemeCss } from './utils/theme';
 
 
+/**
+ * Defines the available theme options.
+ */
 type Theme = 'light' | 'dark';
 
+/**
+ * The root component for the Meme Budget application.
+ * @returns The rendered application UI.
+ */
 export default function App(): React.ReactNode {
   const { t } = useLocalization();
+  
+  // --- State Management ---
   const [activeView, setActiveView] = useState<View>(View.Dashboard);
   const [categories, setCategories] = useLocalStorage<Category[]>('categories', DEFAULT_CATEGORIES);
   const [transactions, setTransactions] = useLocalStorage<Transaction[]>('transactions', []);
@@ -31,11 +46,16 @@ export default function App(): React.ReactNode {
   const [appTheme, setAppTheme] = useLocalStorage<Theme>('theme', 'light');
   const [events, setEvents] = useLocalStorage<Event[]>('events', []);
 
+  // Modal and view-specific state
   const [transactionModalContext, setTransactionModalContext] = useState<{ eventId?: string } | null>(null);
   const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   const [eventToEdit, setEventToEdit] = useState<Event | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
 
+  /**
+   * Effect to apply the selected theme (light/dark) to the application.
+   * It updates the class on the root HTML element and injects CSS variables.
+   */
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
@@ -53,10 +73,18 @@ export default function App(): React.ReactNode {
 
   }, [appTheme]);
 
+  /**
+   * Adds a new transaction to the state.
+   * @param transaction - The transaction object to add, without an ID.
+   */
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     setTransactions(prev => [...prev, { ...transaction, id: crypto.randomUUID() }]);
   };
 
+  /**
+   * Saves an event, either by creating a new one or updating an existing one.
+   * @param event - The event object to save. Can have an optional ID for updates.
+   */
   const saveEvent = (event: Omit<Event, 'id'> & { id?: string }) => {
     if (event.id) { // Update existing event
       setEvents(prev => prev.map(e => e.id === event.id ? { ...e, name: event.name, budget: event.budget } : e));
@@ -67,6 +95,10 @@ export default function App(): React.ReactNode {
     }
   };
 
+  /**
+   * Deletes an event and all its associated transactions.
+   * @param eventId - The ID of the event to delete.
+   */
   const deleteEvent = (eventId: string) => {
     if (window.confirm(t('confirmDeleteEventDesc'))) {
       // If the user is viewing the deleted event, navigate back
@@ -79,11 +111,16 @@ export default function App(): React.ReactNode {
     }
   };
   
+  /**
+   * Opens the event modal for adding or editing an event.
+   * @param event - The event to edit, or null to add a new one.
+   */
   const handleOpenEventModal = (event: Event | null) => {
     setEventToEdit(event);
     setIsEventModalOpen(true);
   };
 
+  // --- Memoized Calculations for Performance ---
   const currentMonthKey = new Date().toISOString().slice(0, 7); // YYYY-MM
 
   // Filter out event transactions from main budget calculations
@@ -97,15 +134,27 @@ export default function App(): React.ReactNode {
     return budgets[currentMonthKey] || [];
   }, [budgets, currentMonthKey]);
   
+  /**
+   * Updates the budget for the current month.
+   * @param newBudgets - An array of budget settings for the current month.
+   */
   const setMonthBudget = (newBudgets: Budget[]) => {
     setBudgets(prev => ({...prev, [currentMonthKey]: newBudgets}));
   }
 
+  /**
+   * Sets the active view, resetting any event-specific view state.
+   * @param view - The new view to display.
+   */
   const handleSetView = (view: View) => {
     setSelectedEventId(null);
     setActiveView(view);
   }
 
+  /**
+   * Renders the currently active view component based on state.
+   * @returns The React component for the current view.
+   */
   const renderView = () => {
     if (selectedEventId) {
         const event = events.find(e => e.id === selectedEventId);
@@ -200,6 +249,7 @@ export default function App(): React.ReactNode {
       </div>
 
 
+      {/* --- Global Modals --- */}
       <AddTransactionModal
         isOpen={!!transactionModalContext}
         onClose={() => setTransactionModalContext(null)}

@@ -5,12 +5,17 @@
     <meta charset="UTF-M" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meme Budget</title>
+    
+    <!-- Tailwind CSS CDN for rapid UI development -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind CSS configuration script -->
     <script>
       tailwind.config = {
-        darkMode: 'class',
+        darkMode: 'class', // Enable dark mode using a class
         theme: {
           extend: {
+            // Define custom semantic colors using CSS variables for theming
             colors: {
               background: 'hsl(var(--background))',
               surface: 'hsl(var(--surface))',
@@ -27,22 +32,31 @@
         }
       }
     </script>
+    
+    <!-- Google Fonts for the 'Poppins' typeface -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Style tag for dynamically generated theme variables -->
     <style id="app-theme"></style>
+    
+    <!-- Global styles -->
     <style>
       body {
-        overscroll-behavior-y: contain;
+        overscroll-behavior-y: contain; /* Prevents pull-to-refresh on mobile */
         font-family: 'Poppins', sans-serif;
       }
       .text-gradient {
+        /* Utility class for creating gradient text */
         background-image: linear-gradient(to right, hsl(var(--gradient-from)), hsl(var(--gradient-to)));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
       }
     </style>
+
+<!-- Import Map for managing ES module dependencies (React) -->
 <script type="importmap">
 {
   "imports": {
@@ -54,7 +68,10 @@
 </script>
 </head>
 <body>
+    <!-- The root element where the React app will be mounted -->
     <div id="root"></div>
+    
+    <!-- Main application script, loaded as a module -->
     <script type="module" src="/index.tsx?v=2"></script>
 </body>
 </html>

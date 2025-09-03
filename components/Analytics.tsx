@@ -1,20 +1,44 @@
+/**
+ * @file Renders the analytics view.
+ * This component visualizes spending for each category against its budget
+ * using progress bars, helping users understand their spending habits.
+ */
 
 import React, { useMemo } from 'react';
 import { Transaction, Budget, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
 
+/**
+ * Props for the Analytics component.
+ */
 interface AnalyticsProps {
+  /** The list of transactions for the current month. */
   transactions: Transaction[];
+  /** The budget settings for the current month. */
   budget: Budget[];
+  /** The list of all available categories. */
   categories: Category[];
 }
 
+/**
+ * The analytics component, displaying spending vs. budget data.
+ * @param {AnalyticsProps} props - The props for the component.
+ * @returns The rendered analytics UI.
+ */
 export default function Analytics({ transactions, budget, categories }: AnalyticsProps): React.ReactNode {
   const { t } = useLocalization();
 
+  /**
+   * Memoized calculation to filter only expense transactions.
+   */
   const expenses = useMemo(() => transactions.filter(t => t.type === 'expense'), [transactions]);
 
+  /**
+   * Memoized calculation to process and aggregate spending data per category.
+   * It combines data from categories, budgets, and expenses, sorts them by
+   * spending percentage (over-budget items first), and prepares it for rendering.
+   */
   const spendingData = useMemo(() => {
     return categories.map(category => {
       const categoryBudget = budget.find(b => b.categoryId === category.id)?.amount || 0;
@@ -28,14 +52,15 @@ export default function Analytics({ transactions, budget, categories }: Analytic
         budget: categoryBudget,
         color: category.color,
       };
-    }).filter(d => d.budget > 0 || d.spent > 0)
-    .sort((a, b) => {
+    }).filter(d => d.budget > 0 || d.spent > 0) // Only show categories with activity
+    .sort((a, b) => { // Sort by percentage of budget spent
         const percentA = a.budget > 0 ? a.spent / a.budget : (a.spent > 0 ? Infinity : 0);
         const percentB = b.budget > 0 ? b.spent / b.budget : (b.spent > 0 ? Infinity : 0);
         return percentB - percentA;
     });
   }, [categories, budget, expenses, t]);
 
+  // Render a message if there's no data to display.
   if (spendingData.length === 0) {
     return (
         <div className="text-center py-10 px-4">
@@ -64,6 +89,7 @@ export default function Analytics({ transactions, budget, categories }: Analytic
                     {t('currencySymbol')}{data.spent.toFixed(2)} / {t('currencySymbol')}{data.budget.toFixed(2)}
                   </span>
                 </div>
+                {/* Progress bar for visual representation */}
                 <div
                   className="w-full bg-input rounded-full h-4 relative overflow-hidden"
                   role="progressbar"
@@ -81,6 +107,7 @@ export default function Analytics({ transactions, budget, categories }: Analytic
                     }}
                   ></div>
                 </div>
+                {/* Warning message if over budget */}
                 {isOverBudget && (
                   <p className="text-right text-xs text-danger mt-1">
                     {t('overBudgetWarning', {amount: `${t('currencySymbol')}${(data.spent - data.budget).toFixed(2)}`})}

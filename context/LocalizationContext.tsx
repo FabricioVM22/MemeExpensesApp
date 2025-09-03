@@ -1,29 +1,61 @@
+/**
+ * @file Manages the internationalization (i18n) context for the application.
+ * This allows the UI to be displayed in different languages based on the user's browser settings.
+ */
 import React, { createContext, useContext, useMemo } from 'react';
 import { en, TranslationKey } from '../locales/en';
 import { es } from '../locales/es';
 
+// A map of available translation files.
 const translations = {
   en,
   es,
 };
 
+/**
+ * Detects the user's preferred language from the browser settings.
+ * Defaults to 'en' if the language is not 'es'.
+ * @returns The detected locale ('en' or 'es').
+ */
 const getLocale = (): 'en' | 'es' => {
-  if (typeof navigator === 'undefined') return 'en';
-  const lang = navigator.language.split(/[-_]/)[0];
+  if (typeof navigator === 'undefined') return 'en'; // For server-side rendering
+  const lang = navigator.language.split(/[-_]/)[0]; // e.g., 'en-US' -> 'en'
   return lang === 'es' ? 'es' : 'en';
 };
 
+/**
+ * Defines the shape of the localization context.
+ */
 interface LocalizationContextType {
+  /** The current active locale. */
   locale: 'en' | 'es';
+  /**
+   * The translation function.
+   * @param key - The key of the string to translate.
+   * @param replacements - An optional object for dynamic value substitution in the string.
+   * @returns The translated string.
+   */
   t: (key: TranslationKey, replacements?: Record<string, string | number>) => string;
 }
 
 const LocalizationContext = createContext<LocalizationContextType | undefined>(undefined);
 
+/**
+ * A provider component that wraps the application to make localization
+ * functionality available to all child components.
+ * @param {object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
+ * @returns The provider component.
+ */
 export const LocalizationProvider = ({ children }: { children: React.ReactNode }) => {
   const locale = getLocale();
   const langFile = translations[locale];
 
+  /**
+   * The translation function `t`, memoized for performance.
+   * It retrieves a string from the current language file, falling back to English if needed.
+   * It also handles replacing placeholders (e.g., `${amount}`) with dynamic values.
+   */
   const t = useMemo(() => (key: TranslationKey, replacements?: Record<string, string | number>): string => {
     let translation = langFile[key] || en[key]; // Fallback to English
     if (replacements) {
@@ -43,6 +75,11 @@ export const LocalizationProvider = ({ children }: { children: React.ReactNode }
   );
 };
 
+/**
+ * A custom hook to easily access the localization context (locale and `t` function).
+ * @throws Will throw an error if used outside of a `LocalizationProvider`.
+ * @returns The localization context.
+ */
 export const useLocalization = () => {
   const context = useContext(LocalizationContext);
   if (context === undefined) {

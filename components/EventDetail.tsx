@@ -1,3 +1,8 @@
+/**
+ * @file Renders the detailed view for a single event budget.
+ * This component displays a summary of the event's budget, spending progress,
+ * and a list of all associated transactions.
+ */
 
 import React from 'react';
 import { Event, Transaction, Category } from '../types';
@@ -6,32 +11,61 @@ import { TranslationKey } from '../locales/en';
 import { ArrowLeftIcon, PlusIcon, EditIcon, TrashIcon } from './icons';
 import { PALETTE } from '../theme';
 
+/**
+ * Props for the EventDetail component.
+ */
 interface EventDetailProps {
+  /** The event object to display details for. */
   event: Event;
+  /** A list of transactions filtered to only include those for this event. */
   transactions: Transaction[];
+  /** The list of all available categories. */
   categories: Category[];
+  /** Callback function to navigate back to the events list. */
   onBack: () => void;
+  /** Callback function to open the modal for adding a new expense to this event. */
   onAddExpense: () => void;
+  /** Callback to open the modal to edit this event. */
   onEdit: (event: Event) => void;
+  /** Callback to delete this event. */
   onDelete: (eventId: string) => void;
 }
 
+/**
+ * A circular icon representing a transaction category.
+ * @param {object} props - The component props.
+ * @param {string} props.color - The background color of the icon.
+ * @param {string} props.categoryName - The name of the category.
+ * @returns A category icon component.
+ */
 const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
     <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
         {categoryName.charAt(0)}
     </div>
 );
 
+/**
+ * The component for displaying the details of a single event.
+ * @param {EventDetailProps} props - The props for the component.
+ * @returns The rendered event detail UI.
+ */
 export default function EventDetail({ event, transactions, categories, onBack, onAddExpense, onEdit, onDelete }: EventDetailProps): React.ReactNode {
     const { t } = useLocalization();
 
+    // Calculate spending summary for the event.
     const spent = transactions.reduce((sum, t) => sum + t.amount, 0);
     const remaining = event.budget - spent;
     const percentage = event.budget > 0 ? Math.min((spent / event.budget) * 100, 100) : 0;
     const isOverBudget = spent > event.budget;
 
+    /**
+     * Helper function to find a category by its ID.
+     * @param {string | undefined} id - The ID of the category.
+     * @returns The category object or undefined.
+     */
     const getCategory = (id: string | undefined) => categories.find(c => c.id === id);
 
+    // Sort transactions to show the most recent first.
     const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     return (
@@ -48,6 +82,7 @@ export default function EventDetail({ event, transactions, categories, onBack, o
                 </button>
             </header>
 
+            {/* Budget Summary Section */}
             <section className="bg-surface rounded-lg shadow p-4 space-y-4">
                 <h2 className="text-lg font-semibold text-center text-text-primary">{t('eventBudgetDetails')}</h2>
                 <div
@@ -83,6 +118,7 @@ export default function EventDetail({ event, transactions, categories, onBack, o
                 </div>
             </section>
             
+            {/* Transactions List Section */}
             <section>
                 <div className="flex justify-between items-center mb-2">
                     <h2 className="text-lg font-semibold text-text-primary">{t('eventTransactions')}</h2>
@@ -122,6 +158,7 @@ export default function EventDetail({ event, transactions, categories, onBack, o
                 </div>
             </section>
 
+            {/* Delete Event Button */}
             <section className="pt-4">
                  <button
                     onClick={() => onDelete(event.id)}

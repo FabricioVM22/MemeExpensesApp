@@ -1,3 +1,8 @@
+/**
+ * @file Renders the main dashboard view of the application.
+ * This component displays the current balance, income/expense summary,
+ * budget setup prompts, and a list of recent transactions.
+ */
 
 import React, { useMemo } from 'react';
 import { Transaction, Budget, Category, View } from '../types';
@@ -6,23 +11,44 @@ import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
 import { PALETTE } from '../theme';
 
+/**
+ * Props for the Dashboard component.
+ */
 interface DashboardProps {
+  /** The list of transactions for the current month. */
   transactions: Transaction[];
+  /** The budget settings for the current month. */
   budget: Budget[];
+  /** The list of all available categories. */
   categories: Category[];
+  /** Function to change the active view. */
   setActiveView: (view: View) => void;
 }
 
+/**
+ * A circular icon representing a transaction category.
+ * @param {object} props - The component props.
+ * @param {string} props.color - The background color of the icon.
+ * @param {string} props.categoryName - The name of the category to display the first letter of.
+ * @returns A category icon component.
+ */
 const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
     <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
         {categoryName.charAt(0)}
     </div>
 );
 
-
+/**
+ * The main dashboard component.
+ * @param {DashboardProps} props - The props for the component.
+ * @returns The rendered dashboard UI.
+ */
 export default function Dashboard({ transactions, budget, categories, setActiveView }: DashboardProps): React.ReactNode {
   const { t } = useLocalization();
 
+  /**
+   * Memoized calculation of total income, expenses, and current balance for the month.
+   */
   const { totalIncome, totalExpenses, balance } = useMemo(() => {
     const income = transactions
       .filter(t => t.type === 'income')
@@ -33,14 +59,23 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
     return { totalIncome: income, totalExpenses: expenses, balance: income - expenses };
   }, [transactions]);
 
+  /**
+   * Memoized calculation to get the 5 most recent transactions.
+   */
   const recentTransactions = [...transactions]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
     
+  /**
+   * Helper function to find a category by its ID.
+   * @param {string | undefined} id - The ID of the category to find.
+   * @returns The category object or undefined if not found.
+   */
   const getCategory = (id: string | undefined) => categories.find(c => c.id === id);
 
   return (
     <div className="space-y-6">
+      {/* Balance and Summary Section */}
       <section>
         <div className="bg-surface rounded-lg shadow p-4 space-y-4">
           <div className="text-center">
@@ -62,6 +97,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
         </div>
       </section>
 
+      {/* Prompt to set a budget if none exists */}
       {budget.length === 0 && (
         <section>
             <div className="bg-primary/10 border-l-4 border-primary text-text-primary p-4 rounded-lg" role="alert">
@@ -79,6 +115,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
         </section>
       )}
 
+      {/* Recent Transactions Section */}
       <section>
         <h2 className="text-lg font-semibold mb-2 text-text-primary">{t('recentTransactions')}</h2>
         <div className="bg-surface rounded-lg shadow p-4 space-y-3">

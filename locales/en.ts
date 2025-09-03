@@ -1,3 +1,8 @@
+/**
+ * @file English translation strings for the Meme Budget application.
+ * This file contains a key-value map of all the English text used in the UI.
+ * The keys are used by the localization context to retrieve the correct string.
+ */
 
 export const en = {
   // General
@@ -119,4 +124,8 @@ export const en = {
   editEventSuccess: 'Event updated successfully!',
 };
 
+/**
+ * A type representing all possible translation keys.
+ * This ensures type safety when using the `t` function.
+ */
 export type TranslationKey = keyof typeof en;
