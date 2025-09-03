@@ -95,7 +95,7 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
         <h2 className="text-xl font-semibold mb-2">{t('budgetSettings')}</h2>
         <p className="text-sm text-text-secondary mb-4">{t('budgetSettingsDesc')}</p>
         <div className="bg-surface rounded-lg shadow p-4 space-y-4">
-            <div className="flex justify-between items-center bg-background p-3 rounded-lg">
+            <div className="flex justify-between items-center">
                 <div>
                     <p className="text-sm text-text-secondary">{t('totalIncome')}</p>
                     <p className="font-bold text-success text-lg">{t('currencySymbol')}{totalIncome.toFixed(2)}</p>
