@@ -36,6 +36,7 @@ export const es: Record<TranslationKey, string> = {
   dashboard: 'Panel',
   analytics: 'Análisis',
   history: 'Historial',
+  events: 'Eventos',
   
   // Dashboard.tsx
   currentBalance: 'Balance Actual',
@@ -94,4 +95,28 @@ export const es: Record<TranslationKey, string> = {
   errorAllFields: 'Por favor, rellena todos los campos',
   placeholderExpense: 'ej., Café',
   placeholderIncome: 'ej., Salario',
+  addExpenseToEvent: 'Añadir Gasto al Evento',
+
+  // Events Feature
+  addEvent: 'Añadir Evento',
+  editEvent: 'Editar Evento',
+  eventName: 'Nombre del Evento',
+  eventBudget: 'Presupuesto del Evento',
+  noEvents: 'Aún no has creado eventos.',
+  createFirstEvent: '¡Crea tu primer presupuesto para un evento!',
+  totalSpent: 'Total Gastado',
+  remaining: 'Restante',
+  eventBudgetDetails: 'Detalles del Presupuesto del Evento',
+  eventTransactions: 'Transacciones del Evento',
+  noEventTransactions: 'Aún no se han registrado gastos para este evento.',
+  addEventSuccess: '¡Evento creado con éxito!',
+  errorEventName: 'Por favor, introduce un nombre para el evento.',
+  errorEventBudget: 'Por favor, introduce un monto de presupuesto válido.',
+  backToEvents: 'Volver a Eventos',
+  editEventTitle: 'Editar Evento',
+  deleteEvent: 'Eliminar Evento',
+  confirmDeleteEventTitle: 'Eliminar Evento',
+  confirmDeleteEventDesc: '¿Estás seguro? Eliminar este evento también eliminará permanentemente todas sus transacciones asociadas.',
+  deleteEventSuccess: '¡Evento eliminado con éxito!',
+  editEventSuccess: '¡Evento actualizado con éxito!',
 };

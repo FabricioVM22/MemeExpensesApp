@@ -34,6 +34,7 @@ export const en = {
   dashboard: 'Dashboard',
   analytics: 'Analytics',
   history: 'History',
+  events: 'Events',
   
   // Dashboard.tsx
   currentBalance: 'Current Balance',
@@ -92,6 +93,30 @@ export const en = {
   errorAllFields: 'Please fill all fields',
   placeholderExpense: 'e.g., Coffee',
   placeholderIncome: 'e.g., Paycheck',
+  addExpenseToEvent: 'Add Expense to Event',
+
+  // Events Feature
+  addEvent: 'Add Event',
+  editEvent: 'Edit Event',
+  eventName: 'Event Name',
+  eventBudget: 'Event Budget',
+  noEvents: 'No events created yet.',
+  createFirstEvent: 'Create your first event budget!',
+  totalSpent: 'Total Spent',
+  remaining: 'Remaining',
+  eventBudgetDetails: 'Event Budget Details',
+  eventTransactions: 'Event Transactions',
+  noEventTransactions: 'No expenses recorded for this event yet.',
+  addEventSuccess: 'Event created successfully!',
+  errorEventName: 'Please enter an event name.',
+  errorEventBudget: 'Please enter a valid budget amount.',
+  backToEvents: 'Back to Events',
+  editEventTitle: 'Edit Event',
+  deleteEvent: 'Delete Event',
+  confirmDeleteEventTitle: 'Delete Event',
+  confirmDeleteEventDesc: 'Are you sure? Deleting this event will also permanently remove all of its associated transactions.',
+  deleteEventSuccess: 'Event deleted successfully!',
+  editEventSuccess: 'Event updated successfully!',
 };
 
 export type TranslationKey = keyof typeof en;

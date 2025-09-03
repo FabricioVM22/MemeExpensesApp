@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View } from '../types';
-import { HomeIcon, ChartIcon, CogIcon, HistoryIcon, PlusIcon } from './icons';
+import { HomeIcon, ChartIcon, CogIcon, HistoryIcon, PlusIcon, GiftIcon } from './icons';
 import { useLocalization } from '../context/LocalizationContext';
 import ThemeToggle from './ThemeToggle';
 
@@ -49,6 +49,12 @@ export default function SideNav({ activeView, setActiveView, openModal, theme, s
                     label={t('analytics')}
                     isActive={activeView === View.Analytics}
                     onClick={() => setActiveView(View.Analytics)}
+                />
+                <NavItem
+                    icon={<GiftIcon className="w-6 h-6" />}
+                    label={t('events')}
+                    isActive={activeView === View.Events}
+                    onClick={() => setActiveView(View.Events)}
                 />
                 <NavItem
                     icon={<HistoryIcon className="w-6 h-6" />}

@@ -1,4 +1,10 @@
 
+export interface Event {
+  id: string;
+  name: string;
+  budget: number;
+}
+
 export interface Transaction {
   id: string;
   type: 'income' | 'expense';
@@ -6,6 +12,7 @@ export interface Transaction {
   description: string;
   date: string; // ISO String: YYYY-MM-DD
   categoryId?: string;
+  eventId?: string;
 }
 
 export interface Category {
@@ -24,4 +31,5 @@ export enum View {
   Analytics = 'analytics',
   Settings = 'settings',
   History = 'history',
+  Events = 'events',
 }

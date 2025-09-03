@@ -9,23 +9,26 @@ interface AddTransactionModalProps {
   onClose: () => void;
   onAddTransaction: (transaction: Omit<Transaction, 'id'>) => void;
   categories: Category[];
+  eventId?: string;
 }
 
-export default function AddTransactionModal({ isOpen, onClose, onAddTransaction, categories }: AddTransactionModalProps): React.ReactNode {
+export default function AddTransactionModal({ isOpen, onClose, onAddTransaction, categories, eventId }: AddTransactionModalProps): React.ReactNode {
   const { t } = useLocalization();
-  const [type, setType] = useState<'income' | 'expense'>('expense');
+  const isEventExpense = !!eventId;
+  
+  const [type, setType] = useState<'income' | 'expense'>(isEventExpense ? 'expense' : 'expense');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState<string>(categories[0]?.id || '');
 
   useEffect(() => {
     if (isOpen) {
-      setType('expense');
+      setType(isEventExpense ? 'expense' : 'expense');
       setAmount('');
       setDescription('');
       setCategoryId(categories.find(c => c.id !== 'other')?.id || categories[0]?.id || '');
     }
-  }, [isOpen, categories]);
+  }, [isOpen, categories, isEventExpense]);
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +42,7 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
       description,
       date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
       categoryId: type === 'expense' ? categoryId : undefined,
+      eventId,
     });
     onClose();
   };
@@ -49,12 +53,14 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div className="bg-surface rounded-lg shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <h2 className="text-xl font-bold text-center">{t('addTransactionTitle')}</h2>
+          <h2 className="text-xl font-bold text-center">{isEventExpense ? t('addExpenseToEvent') : t('addTransactionTitle')}</h2>
           
-          <div className="grid grid-cols-2 gap-2 rounded-lg bg-background p-1">
-            <button type="button" onClick={() => setType('expense')} className={`py-2 rounded-md transition-colors ${type === 'expense' ? 'bg-surface shadow text-danger font-bold' : 'text-text-secondary'}`}>{t('expense')}</button>
-            <button type="button" onClick={() => setType('income')} className={`py-2 rounded-md transition-colors ${type === 'income' ? 'bg-surface shadow text-success font-bold' : 'text-text-secondary'}`}>{t('income')}</button>
-          </div>
+          {!isEventExpense && (
+            <div className="grid grid-cols-2 gap-2 rounded-lg bg-background p-1">
+              <button type="button" onClick={() => setType('expense')} className={`py-2 rounded-md transition-colors ${type === 'expense' ? 'bg-surface shadow text-danger font-bold' : 'text-text-secondary'}`}>{t('expense')}</button>
+              <button type="button" onClick={() => setType('income')} className={`py-2 rounded-md transition-colors ${type === 'income' ? 'bg-surface shadow text-success font-bold' : 'text-text-secondary'}`}>{t('income')}</button>
+            </div>
+          )}
 
           <div>
             <label htmlFor="amount" className="block text-sm font-medium text-text-secondary">{t('amount')}</label>
