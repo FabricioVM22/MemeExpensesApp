@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Analytics from './components/Analytics';
 import Settings from './components/Settings';
 import BottomNav from './components/BottomNav';
+import SideNav from './components/SideNav';
 import AddTransactionModal from './components/AddTransactionModal';
 import History from './components/History';
 import ThemeToggle from './components/ThemeToggle';
@@ -86,30 +87,48 @@ export default function App(): React.ReactNode {
   };
 
   return (
-    <div className="font-sans antialiased text-text-primary">
-      <div className="relative pb-24 max-w-lg mx-auto">
-        <header className="p-4 flex justify-between items-center border-b border-border">
-          <div className="w-8"></div> {/* Spacer */}
-          <h1 className="text-2xl font-bold text-center text-gradient">Meme Budget</h1>
-          <ThemeToggle theme={appTheme} setTheme={setAppTheme} />
-        </header>
+    <div className="font-sans antialiased text-text-primary bg-background min-h-screen md:flex">
+      
+      {/* --- Sidebar for Desktop --- */}
+      <SideNav
+        activeView={activeView}
+        setActiveView={setActiveView}
+        openModal={() => setIsModalOpen(true)}
+        theme={appTheme}
+        setTheme={setAppTheme}
+      />
 
-        <main className="p-4">
-          {renderView()}
-        </main>
+      {/* --- Main Content Area --- */}
+      <div className="flex-1 w-full md:w-auto">
+        <div className="relative pb-24 md:pb-8 max-w-3xl mx-auto">
+          
+          {/* --- Mobile Header --- */}
+          <header className="p-4 flex justify-between items-center border-b border-border md:hidden">
+            <div className="w-8"></div> {/* Spacer */}
+            <h1 className="text-2xl font-bold text-center text-gradient">Meme Budget</h1>
+            <ThemeToggle theme={appTheme} setTheme={setAppTheme} />
+          </header>
 
-        <div className="fixed bottom-20 right-4 z-20" style={{ right: 'calc(50% - 224px + 16px)' }}>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-primary hover:bg-primary-hover text-white rounded-full p-4 shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-transform transform hover:scale-105"
-            aria-label={t('addTransaction')}
-          >
-            <PlusIcon className="w-8 h-8" />
-          </button>
+          <main className="p-4 md:pt-8">
+            {renderView()}
+          </main>
+          
+          {/* --- Mobile Floating Action Button --- */}
+          <div className="fixed bottom-20 right-6 z-20 md:hidden">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-primary hover:bg-primary-hover text-white rounded-full p-4 shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-transform transform hover:scale-105"
+              aria-label={t('addTransaction')}
+            >
+              <PlusIcon className="w-8 h-8" />
+            </button>
+          </div>
+          
+          {/* --- Mobile Bottom Navigation --- */}
+          <BottomNav activeView={activeView} setActiveView={setActiveView} />
         </div>
-        
-        <BottomNav activeView={activeView} setActiveView={setActiveView} />
       </div>
+
 
       <AddTransactionModal
         isOpen={isModalOpen}

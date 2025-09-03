@@ -21,7 +21,7 @@ const NavItem = ({ icon, label, isActive, onClick }: { icon: React.ReactNode, la
 export default function BottomNav({ activeView, setActiveView }: BottomNavProps): React.ReactNode {
   const { t } = useLocalization();
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-sm border-t border-border flex justify-around max-w-lg mx-auto shadow-top z-10">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-sm border-t border-border flex justify-around max-w-lg mx-auto shadow-top z-10 md:hidden">
       <NavItem
         icon={<HomeIcon className="w-6 h-6" />}
         label={t('dashboard')}
