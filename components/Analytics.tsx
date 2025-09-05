@@ -1,3 +1,4 @@
+
 /**
  * @file Renders the analytics view.
  * This component visualizes spending for each category against its budget
@@ -76,7 +77,7 @@ export default function Analytics({ transactions, budget, categories }: Analytic
     <div className="space-y-8">
       <div>
         <h2 className="text-xl font-semibold mb-4 text-center">{t('spendingVsBudget')}</h2>
-        <div className="bg-surface rounded-lg shadow p-4 sm:p-6 space-y-6">
+        <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 sm:p-6 space-y-6">
           {spendingData.map((data) => {
             const isOverBudget = data.budget > 0 && data.spent > data.budget;
             const percentage = data.budget > 0 ? Math.min((data.spent / data.budget) * 100, 100) : (data.spent > 0 ? 100 : 0);

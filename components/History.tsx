@@ -1,3 +1,4 @@
+
 /**
  * @file Renders the history view.
  * This component displays past months' financial summaries in an accordion layout.
@@ -119,7 +120,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                 const balance = data.income - data.expenses;
                 const isExpanded = expandedMonth === data.month;
                 return (
-                    <div key={data.month} className="bg-surface rounded-lg shadow">
+                    <div key={data.month} className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg">
                         {/* Accordion Header */}
                         <button 
                             className="w-full p-4 text-left flex justify-between items-center"
@@ -172,7 +173,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
 
                                     if (transaction.type === 'income') {
                                         displayName = t('income');
-                                        displayColor = PALETTE.mint; 
+                                        displayColor = PALETTE.green; 
                                     } else {
                                         displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
                                         displayColor = category ? category.color : '#a8a29e';
@@ -184,6 +185,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                                                 <CategoryIcon color={displayColor} categoryName={displayName}/>
                                                 <div>
                                                     <p className="font-semibold">{transaction.description}</p>
+
                                                     <p className="text-sm text-text-secondary">{displayName}</p>
                                                 </div>
                                             </div>

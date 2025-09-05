@@ -1,3 +1,4 @@
+
 /**
  * @file The main component of the Meme Budget application.
  * This component orchestrates the entire application's state, navigation,
@@ -43,7 +44,7 @@ export default function App(): React.ReactNode {
   const [categories, setCategories] = useLocalStorage<Category[]>('categories', DEFAULT_CATEGORIES);
   const [transactions, setTransactions] = useLocalStorage<Transaction[]>('transactions', []);
   const [budgets, setBudgets] = useLocalStorage<Record<string, Budget[]>>('budgets', {});
-  const [appTheme, setAppTheme] = useLocalStorage<Theme>('theme', 'light');
+  const [appTheme, setAppTheme] = useLocalStorage<Theme>('theme', 'dark');
   const [events, setEvents] = useLocalStorage<Event[]>('events', []);
 
   // Modal and view-specific state
@@ -204,7 +205,7 @@ export default function App(): React.ReactNode {
   };
 
   return (
-    <div className="font-sans antialiased text-text-primary bg-background min-h-screen md:flex">
+    <div className="font-sans antialiased text-text-primary min-h-screen md:flex">
       
       {/* --- Sidebar for Desktop --- */}
       <SideNav
@@ -220,7 +221,7 @@ export default function App(): React.ReactNode {
         <div className="relative pb-24 md:pb-8 max-w-3xl mx-auto">
           
           {/* --- Mobile Header --- */}
-          <header className="p-4 flex justify-between items-center border-b border-border md:hidden">
+          <header className="sticky top-0 z-20 p-4 flex justify-between items-center md:hidden bg-surface/50 backdrop-blur-lg border-b border-border">
             <div className="w-8"></div> {/* Spacer */}
             <h1 className="text-2xl font-bold text-center text-gradient">Meme Budget</h1>
             <ThemeToggle theme={appTheme} setTheme={setAppTheme} />

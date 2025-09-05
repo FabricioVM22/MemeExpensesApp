@@ -1,3 +1,4 @@
+
 /**
  * @file Renders the main view for the "Events" feature.
  * This component displays a list of all created event budgets,
@@ -71,7 +72,7 @@ export default function Events({ events, transactions, onSelectEvent, onAddEvent
                         const isOverBudget = spent > event.budget;
 
                         return (
-                            <div key={event.id} className="bg-surface rounded-lg shadow p-4 space-y-3 hover:shadow-md transition-shadow">
+                            <div key={event.id} className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-3 hover:shadow-md transition-shadow">
                                 <div className="flex justify-between items-start">
                                     {/* Event Name - clickable to see details */}
                                     <div onClick={() => onSelectEvent(event.id)} className="flex-grow cursor-pointer pr-2">
@@ -121,7 +122,7 @@ export default function Events({ events, transactions, onSelectEvent, onAddEvent
                 </div>
             ) : (
                 // Placeholder shown when no events have been created
-                <div className="text-center py-10 px-4 bg-surface rounded-lg shadow">
+                <div className="text-center py-10 px-4 bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg">
                     <h2 className="text-lg font-semibold mb-2">{t('noEvents')}</h2>
                     <p className="text-text-secondary mb-4">{t('createFirstEvent')}</p>
                     <button onClick={onAddEvent} className="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary-hover transition-colors">

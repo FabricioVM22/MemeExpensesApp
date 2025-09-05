@@ -1,3 +1,4 @@
+
 /**
  * @file Renders the main dashboard view of the application.
  * This component displays the current balance, income/expense summary,
@@ -77,7 +78,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
     <div className="space-y-6">
       {/* Balance and Summary Section */}
       <section>
-        <div className="bg-surface rounded-lg shadow p-4 space-y-4">
+        <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-4">
           <div className="text-center">
             <p className="text-sm text-text-secondary">{t('currentBalance')}</p>
             <p className={`text-3xl font-bold ${balance >= 0 ? 'text-success' : 'text-danger'}`}>
@@ -100,7 +101,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
       {/* Prompt to set a budget if none exists */}
       {budget.length === 0 && (
         <section>
-            <div className="bg-primary/10 border-l-4 border-primary text-text-primary p-4 rounded-lg" role="alert">
+            <div className="bg-primary/10 backdrop-blur-lg border-l-4 border-primary text-text-primary p-4 rounded-2xl" role="alert">
                 <div className="flex items-center">
                     <CogIcon className="w-6 h-6 mr-3"/>
                     <div>
@@ -118,7 +119,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
       {/* Recent Transactions Section */}
       <section>
         <h2 className="text-lg font-semibold mb-2 text-text-primary">{t('recentTransactions')}</h2>
-        <div className="bg-surface rounded-lg shadow p-4 space-y-3">
+        <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-3">
           {recentTransactions.length > 0 ? (
             recentTransactions.map(transaction => {
               const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
@@ -127,7 +128,7 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
 
               if (transaction.type === 'income') {
                   displayName = t('income');
-                  displayColor = PALETTE.mint; 
+                  displayColor = PALETTE.green; 
               } else {
                   displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
                   displayColor = category ? category.color : '#a8a29e'; // Stone from constants

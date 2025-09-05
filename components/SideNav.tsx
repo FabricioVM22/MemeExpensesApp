@@ -1,3 +1,4 @@
+
 /**
  * @file Renders the sidebar navigation for desktop and tablet views.
  * This component provides access to all main sections of the app, a button
@@ -36,7 +37,7 @@ interface SideNavProps {
  * @returns A navigation item button.
  */
 const NavItem = ({ icon, label, isActive, onClick }: { icon: React.ReactNode, label: string, isActive: boolean, onClick: () => void }) => (
-    <button onClick={onClick} className={`flex items-center w-full px-4 py-3 rounded-lg transition-colors duration-200 text-left ${isActive ? 'bg-primary/20 text-primary font-semibold' : 'text-text-secondary hover:bg-surface hover:text-primary'}`}>
+    <button onClick={onClick} className={`flex items-center w-full px-4 py-3 rounded-lg transition-colors duration-200 text-left ${isActive ? 'bg-white/10 text-primary font-semibold' : 'text-text-secondary hover:bg-white/5 hover:text-primary'}`}>
         {icon}
         <span className="ml-4">{label}</span>
     </button>
@@ -51,7 +52,7 @@ export default function SideNav({ activeView, setActiveView, openModal, theme, s
     const { t } = useLocalization();
 
     return (
-        <aside className="hidden md:flex flex-col w-64 bg-surface border-r border-border p-4 space-y-6 flex-shrink-0">
+        <aside className="hidden md:flex flex-col w-64 bg-surface/30 backdrop-blur-xl border-r border-border p-4 space-y-6 flex-shrink-0">
             <div className="px-2 pt-2">
                <h1 className="text-3xl font-bold text-center text-gradient">Meme Budget</h1>
             </div>
