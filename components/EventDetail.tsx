@@ -73,18 +73,18 @@ export default function EventDetail({ event, transactions, categories, onBack, o
         <div className="space-y-6">
             <header className="flex items-center justify-between space-x-4">
                 <div className="flex items-center space-x-4 min-w-0">
-                    <button onClick={onBack} className="p-2 rounded-full hover:bg-surface/50 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary" aria-label={t('backToEvents')}>
+                    <button onClick={onBack} className="p-2 rounded-full hover:bg-input flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary" aria-label={t('backToEvents')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
                     <h1 className="text-2xl font-bold text-gradient truncate">{event.name}</h1>
                 </div>
-                <button onClick={() => onEdit(event)} className="p-2 rounded-full hover:bg-surface/50 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary" aria-label={t('editEvent')}>
+                <button onClick={() => onEdit(event)} className="p-2 rounded-full hover:bg-input flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary" aria-label={t('editEvent')}>
                     <EditIcon className="w-6 h-6"/>
                 </button>
             </header>
 
             {/* Budget Summary Section */}
-            <section className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-4">
+            <section className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-4">
                 <h2 className="text-lg font-semibold text-center text-text-primary">{t('eventBudgetDetails')}</h2>
                 <div
                   className="w-full bg-input rounded-full h-5 relative overflow-hidden"
@@ -131,7 +131,7 @@ export default function EventDetail({ event, transactions, categories, onBack, o
                         {t('expense')}
                     </button>
                 </div>
-                 <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-3">
+                 <div className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-3">
                     {sortedTransactions.length > 0 ? (
                         sortedTransactions.map(transaction => {
                             const category = getCategory(transaction.categoryId);

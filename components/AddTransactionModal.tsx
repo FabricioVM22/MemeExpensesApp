@@ -80,15 +80,15 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
 
   return (
     // Modal backdrop
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
       {/* Modal content */}
-      <div className="bg-surface/80 backdrop-blur-lg border border-border rounded-2xl shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
+      <div className="bg-surface border border-border rounded-2xl shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <h2 className="text-xl font-bold text-center">{isEventExpense ? t('addExpenseToEvent') : t('addTransactionTitle')}</h2>
           
           {/* Type selector (Income/Expense), hidden for event-specific expenses */}
           {!isEventExpense && (
-            <div className="grid grid-cols-2 gap-2 rounded-lg bg-black/10 p-1">
+            <div className="grid grid-cols-2 gap-2 rounded-lg bg-input p-1">
               <button type="button" onClick={() => setType('expense')} className={`py-2 rounded-md transition-colors ${type === 'expense' ? 'bg-surface shadow-md text-danger font-bold' : 'text-text-secondary'}`}>{t('expense')}</button>
               <button type="button" onClick={() => setType('income')} className={`py-2 rounded-md transition-colors ${type === 'income' ? 'bg-surface shadow-md text-success font-bold' : 'text-text-secondary'}`}>{t('income')}</button>
             </div>
@@ -143,7 +143,7 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
           
           {/* Action Buttons */}
           <div className="flex justify-end space-x-3 pt-2">
-            <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-black/10 hover:bg-black/20 transition-colors">{t('cancel')}</button>
+            <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-input hover:bg-border transition-colors">{t('cancel')}</button>
             <button type="submit" className="py-2 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary-hover transition-colors">{t('add')}</button>
           </div>
         </form>

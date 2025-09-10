@@ -120,7 +120,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                 const balance = data.income - data.expenses;
                 const isExpanded = expandedMonth === data.month;
                 return (
-                    <div key={data.month} className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg">
+                    <div key={data.month} className="bg-surface border border-border rounded-2xl shadow-lg">
                         {/* Accordion Header */}
                         <button 
                             className="w-full p-4 text-left flex justify-between items-center"

@@ -149,7 +149,7 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
       <section>
         <h2 className="text-xl font-semibold mb-2">{t('budgetSettings')}</h2>
         <p className="text-sm text-text-secondary mb-4">{t('budgetSettingsDesc')}</p>
-        <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-4">
+        <div className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-4">
             <div className="flex justify-between items-center">
                 <div>
                     <p className="text-sm text-text-secondary">{t('totalIncome')}</p>
@@ -180,9 +180,9 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
       <section>
         <h2 className="text-xl font-semibold mb-2">{t('manageCategories')}</h2>
         <p className="text-sm text-text-secondary mb-4">{t('manageCategoriesDesc')}</p>
-        <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4 space-y-3">
+        <div className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-3">
           {categories.map(category => (
-            <div key={category.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-white/10">
+            <div key={category.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-input">
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full" style={{ backgroundColor: category.color }}></div>
                 <span className="font-medium">{category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name}</span>
@@ -193,7 +193,7 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
               </div>
             </div>
           ))}
-           <button onClick={handleOpenAddModal} className="w-full border-2 border-dashed border-border text-text-secondary font-semibold py-2 px-4 rounded-lg hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-colors">
+           <button onClick={handleOpenAddModal} className="w-full border-2 border-dashed border-border text-text-secondary font-semibold py-2 px-4 rounded-lg hover:bg-input hover:border-primary/50 hover:text-primary transition-colors">
             {t('addCategory')}
           </button>
         </div>
@@ -203,7 +203,7 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
        <section>
         <h2 className="text-xl font-semibold mb-2">{t('notifications')}</h2>
         <p className="text-sm text-text-secondary mb-4">{t('notificationsDesc')}</p>
-        <div className="bg-surface/50 backdrop-blur-lg border border-border rounded-2xl shadow-lg p-4">
+        <div className="bg-surface border border-border rounded-2xl shadow-lg p-4">
             <label htmlFor="notif-frequency" className="block font-medium mb-2">{t('notificationFrequency')}</label>
             <select
                 id="notif-frequency"

@@ -81,8 +81,8 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-surface/80 backdrop-blur-lg border border-border rounded-2xl shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-surface border border-border rounded-2xl shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <h2 className="text-xl font-bold text-center">{categoryToEdit ? t('editCategory') : t('addCategory')}</h2>
 
@@ -118,7 +118,7 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
           
           {/* Action Buttons */}
           <div className="flex justify-end space-x-3 pt-2">
-            <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-black/10 hover:bg-black/20 transition-colors">{t('cancel')}</button>
+            <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-input hover:bg-border transition-colors">{t('cancel')}</button>
             <button type="submit" className="py-2 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary-hover transition-colors">{t('save')}</button>
           </div>
         </form>
