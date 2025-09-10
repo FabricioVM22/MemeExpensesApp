@@ -11,6 +11,7 @@ import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import CategoryModal from './CategoryModal';
+import Dropdown from './Dropdown';
 import { EditIcon, TrashIcon } from './icons';
 
 /**
@@ -142,6 +143,12 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
     }
   }
 
+  const notificationOptions = [
+    { value: 'monthly', label: t('freq_monthly') },
+    { value: 'weekly', label: t('freq_weekly') },
+    { value: 'daily', label: t('freq_daily') },
+    { value: 'never', label: t('freq_never') },
+  ];
 
   return (
     <div className="space-y-8">
@@ -204,18 +211,13 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
         <h2 className="text-xl font-semibold mb-2">{t('notifications')}</h2>
         <p className="text-sm text-text-secondary mb-4">{t('notificationsDesc')}</p>
         <div className="bg-surface border border-border rounded-2xl shadow-lg p-4">
-            <label htmlFor="notif-frequency" className="block font-medium mb-2">{t('notificationFrequency')}</label>
-            <select
-                id="notif-frequency"
-                value={notificationFrequency}
-                onChange={e => setNotificationFrequency(e.target.value)}
-                className="w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
-              >
-                <option value="monthly">{t('freq_monthly')}</option>
-                <option value="weekly">{t('freq_weekly')}</option>
-                <option value="daily">{t('freq_daily')}</option>
-                <option value="never">{t('freq_never')}</option>
-            </select>
+            <label id="notif-frequency-label" className="block font-medium mb-2">{t('notificationFrequency')}</label>
+            <Dropdown
+              labelId="notif-frequency-label"
+              options={notificationOptions}
+              selectedValue={notificationFrequency}
+              onSelect={setNotificationFrequency}
+            />
         </div>
       </section>
 

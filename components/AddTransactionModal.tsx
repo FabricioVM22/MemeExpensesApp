@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
+import Dropdown from './Dropdown';
 
 /**
  * Props for the AddTransactionModal component.
@@ -65,6 +66,10 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
       alert(t('errorAllFields'));
       return;
     }
+    if (type === 'expense' && !categoryId) {
+      alert('Please select a category.'); // A simple validation
+      return;
+    }
     onAddTransaction({
       type,
       amount: parseFloat(amount),
@@ -75,6 +80,12 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
     });
     onClose();
   };
+  
+  const categoryOptions = categories.map(c => ({
+    value: c.id,
+    label: c.name.startsWith('category_') ? t(c.name as TranslationKey) : c.name
+  }));
+
 
   if (!isOpen) return null;
 
@@ -128,16 +139,16 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
 
           {/* Category Selector (for expenses only) */}
           {type === 'expense' && (
-            <div>
-              <label htmlFor="category" className="block text-sm font-medium text-text-secondary">{t('category')}</label>
-              <select
-                id="category"
-                value={categoryId}
-                onChange={e => setCategoryId(e.target.value)}
-                className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
-              >
-                {categories.map(c => <option key={c.id} value={c.id}>{c.name.startsWith('category_') ? t(c.name as TranslationKey) : c.name}</option>)}
-              </select>
+            <div className="mt-1">
+              <label id="category-label" className="block text-sm font-medium text-text-secondary">{t('category')}</label>
+              <div className="mt-1">
+                <Dropdown
+                    labelId="category-label"
+                    options={categoryOptions}
+                    selectedValue={categoryId}
+                    onSelect={setCategoryId}
+                />
+              </div>
             </div>
           )}
           
