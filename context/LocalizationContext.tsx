@@ -1,10 +1,11 @@
 /**
  * @file Manages the internationalization (i18n) context for the application.
- * This allows the UI to be displayed in different languages based on the user's browser settings.
+ * This allows the UI to be displayed in different languages based on user selection.
  */
 import React, { createContext, useContext, useMemo } from 'react';
 import { en, TranslationKey } from '../locales/en';
 import { es } from '../locales/es';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 // A map of available translation files.
 const translations = {
@@ -13,11 +14,11 @@ const translations = {
 };
 
 /**
- * Detects the user's preferred language from the browser settings.
+ * Detects the user's preferred language from the browser settings for initial setup.
  * Defaults to 'en' if the language is not 'es'.
  * @returns The detected locale ('en' or 'es').
  */
-const getLocale = (): 'en' | 'es' => {
+const getInitialLocale = (): 'en' | 'es' => {
   if (typeof navigator === 'undefined') return 'en'; // For server-side rendering
   const lang = navigator.language.split(/[-_]/)[0]; // e.g., 'en-US' -> 'en'
   return lang === 'es' ? 'es' : 'en';
@@ -29,6 +30,8 @@ const getLocale = (): 'en' | 'es' => {
 interface LocalizationContextType {
   /** The current active locale. */
   locale: 'en' | 'es';
+  /** Function to set the active locale. */
+  setLocale: React.Dispatch<React.SetStateAction<'en' | 'es'>>;
   /**
    * The translation function.
    * @param key - The key of the string to translate.
@@ -48,7 +51,7 @@ const LocalizationContext = createContext<LocalizationContextType | undefined>(u
  * @returns The provider component.
  */
 export const LocalizationProvider = ({ children }: { children: React.ReactNode }) => {
-  const locale = getLocale();
+  const [locale, setLocale] = useLocalStorage<'en' | 'es'>('language', getInitialLocale());
   const langFile = translations[locale];
 
   /**
@@ -66,7 +69,7 @@ export const LocalizationProvider = ({ children }: { children: React.ReactNode }
     return translation;
   }, [locale, langFile]);
 
-  const value = { locale, t };
+  const value = { locale, setLocale, t };
 
   return (
     <LocalizationContext.Provider value={value}>
@@ -76,7 +79,7 @@ export const LocalizationProvider = ({ children }: { children: React.ReactNode }
 };
 
 /**
- * A custom hook to easily access the localization context (locale and `t` function).
+ * A custom hook to easily access the localization context (locale, setLocale, and `t` function).
  * @throws Will throw an error if used outside of a `LocalizationProvider`.
  * @returns The localization context.
  */

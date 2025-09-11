@@ -94,6 +94,9 @@ export const es: Record<TranslationKey, string> = {
   freq_weekly: 'Semanal',
   freq_monthly: 'Mensual',
   freq_never: 'Nunca',
+  language: 'Idioma',
+  languageDesc: 'Elige el idioma de visualización para la aplicación.',
+  selectLanguage: 'Seleccionar Idioma',
   
   // AddTransactionModal.tsx
   addTransactionTitle: 'Añadir Transacción',

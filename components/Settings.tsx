@@ -1,4 +1,3 @@
-
 /**
  * @file Renders the settings view for the application.
  * This component allows users to manage their monthly budgets,
@@ -38,7 +37,7 @@ interface SettingsProps {
  * @returns The rendered settings UI.
  */
 export default function Settings({ categories, setCategories, budget, setMonthBudget, transactions, setTransactions }: SettingsProps): React.ReactNode {
-  const { t } = useLocalization();
+  const { t, locale, setLocale } = useLocalization();
   // Local state to manage budget input fields before saving
   const [localBudgets, setLocalBudgets] = useState<Record<string, number>>({});
   const [notificationFrequency, setNotificationFrequency] = useLocalStorage('notificationFrequency', 'monthly');
@@ -150,6 +149,11 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
     { value: 'never', label: t('freq_never') },
   ];
 
+  const languageOptions = [
+    { value: 'en', label: 'English' },
+    { value: 'es', label: 'Español' },
+  ];
+
   return (
     <div className="space-y-8">
       {/* Budget Settings */}
@@ -217,6 +221,21 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
               options={notificationOptions}
               selectedValue={notificationFrequency}
               onSelect={setNotificationFrequency}
+            />
+        </div>
+      </section>
+
+      {/* Language */}
+      <section>
+        <h2 className="text-xl font-semibold mb-2">{t('language')}</h2>
+        <p className="text-sm text-text-secondary mb-4">{t('languageDesc')}</p>
+        <div className="bg-surface border border-border rounded-2xl shadow-lg p-4">
+            <label id="language-label" className="block font-medium mb-2">{t('selectLanguage')}</label>
+            <Dropdown
+              labelId="language-label"
+              options={languageOptions}
+              selectedValue={locale}
+              onSelect={(value) => setLocale(value as 'en' | 'es')}
             />
         </div>
       </section>

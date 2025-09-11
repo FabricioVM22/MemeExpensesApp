@@ -92,6 +92,9 @@ export const en = {
   freq_weekly: 'Weekly',
   freq_monthly: 'Monthly',
   freq_never: 'Never',
+  language: 'Language',
+  languageDesc: 'Choose the display language for the application.',
+  selectLanguage: 'Select Language',
   
   // AddTransactionModal.tsx
   addTransactionTitle: 'Add Transaction',
