@@ -95,6 +95,13 @@ export const en = {
   language: 'Language',
   languageDesc: 'Choose the display language for the application.',
   selectLanguage: 'Select Language',
+  dataManagement: 'Data Management',
+  dataManagementDesc: 'Export your data for backup or import it on another device.',
+  exportData: 'Export Data',
+  importData: 'Import Data',
+  importConfirm: 'Are you sure you want to import data? This will overwrite all current data in the app.',
+  importSuccess: 'Data imported successfully!',
+  importErrorInvalidFile: 'Import failed. The selected file is invalid or corrupted. Please use a valid backup file.',
   
   // AddTransactionModal.tsx
   addTransactionTitle: 'Add Transaction',

@@ -4,31 +4,29 @@
  * add/edit/delete categories, and set notification preferences.
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { Budget, Category, Transaction } from '../types';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Budget, Category, Transaction, Event } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import CategoryModal from './CategoryModal';
 import Dropdown from './Dropdown';
-import { EditIcon, TrashIcon } from './icons';
+import { EditIcon, TrashIcon, DownloadIcon, UploadIcon } from './icons';
 
 /**
  * Props for the Settings component.
  */
 interface SettingsProps {
-  /** The list of all available categories. */
   categories: Category[];
-  /** Function to update the list of categories. */
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
-  /** The budget settings for the current month. */
   budget: Budget[];
-  /** Function to update the budget for the current month. */
   setMonthBudget: (newBudgets: Budget[]) => void;
-  /** The list of all main transactions (excluding event transactions). */
   transactions: Transaction[];
-  /** Function to update the global list of transactions. */
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  events: Event[];
+  setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+  budgets: Record<string, Budget[]>;
+  setBudgets: React.Dispatch<React.SetStateAction<Record<string, Budget[]>>>;
 }
 
 /**
@@ -36,7 +34,10 @@ interface SettingsProps {
  * @param {SettingsProps} props - The props for the component.
  * @returns The rendered settings UI.
  */
-export default function Settings({ categories, setCategories, budget, setMonthBudget, transactions, setTransactions }: SettingsProps): React.ReactNode {
+export default function Settings({ 
+  categories, setCategories, budget, setMonthBudget, transactions, setTransactions, 
+  events, setEvents, budgets, setBudgets 
+}: SettingsProps): React.ReactNode {
   const { t, locale, setLocale } = useLocalization();
   // Local state to manage budget input fields before saving
   const [localBudgets, setLocalBudgets] = useState<Record<string, number>>({});
@@ -45,6 +46,8 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
   // State for category management modal
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
+  
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   /**
    * Effect to synchronize the local budget state with the global budget prop
@@ -142,6 +145,69 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
     }
   }
 
+  /**
+   * Gathers all user data and triggers a download as a JSON file.
+   */
+  const handleExportData = () => {
+    const backupData = {
+      transactions: transactions,
+      categories: categories,
+      budgets: budgets,
+      events: events,
+    };
+    const dataStr = JSON.stringify(backupData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    link.download = `meme-budget-backup-${date}.json`;
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  /**
+   * Handles the file selection for data import.
+   * Reads the file, validates it, and updates the application state.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The file input change event.
+   */
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target?.result;
+        if (typeof text !== 'string') throw new Error("File could not be read");
+        
+        const data = JSON.parse(text);
+
+        // Basic validation
+        if (!data.transactions || !data.categories || !data.budgets || !data.events) {
+          throw new Error("Invalid file structure");
+        }
+        
+        if (window.confirm(t('importConfirm'))) {
+          setTransactions(data.transactions);
+          setCategories(data.categories);
+          setBudgets(data.budgets);
+          setEvents(data.events);
+          alert(t('importSuccess'));
+        }
+      } catch (error) {
+        console.error("Import failed:", error);
+        alert(t('importErrorInvalidFile'));
+      } finally {
+        // Reset file input to allow importing the same file again
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const notificationOptions = [
     { value: 'monthly', label: t('freq_monthly') },
     { value: 'weekly', label: t('freq_weekly') },
@@ -207,6 +273,23 @@ export default function Settings({ categories, setCategories, budget, setMonthBu
            <button onClick={handleOpenAddModal} className="w-full border-2 border-dashed border-border text-text-secondary font-semibold py-2 px-4 rounded-lg hover:bg-input hover:border-primary/50 hover:text-primary transition-colors">
             {t('addCategory')}
           </button>
+        </div>
+      </section>
+
+       {/* Data Management */}
+      <section>
+        <h2 className="text-xl font-semibold mb-2">{t('dataManagement')}</h2>
+        <p className="text-sm text-text-secondary mb-4">{t('dataManagementDesc')}</p>
+        <div className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-3">
+          <button onClick={handleExportData} className="w-full flex items-center justify-center space-x-2 bg-input text-text-primary font-semibold py-3 px-4 rounded-lg hover:bg-border transition-colors">
+            <DownloadIcon className="w-5 h-5"/>
+            <span>{t('exportData')}</span>
+          </button>
+          <button onClick={() => fileInputRef.current?.click()} className="w-full flex items-center justify-center space-x-2 bg-input text-text-primary font-semibold py-3 px-4 rounded-lg hover:bg-border transition-colors">
+            <UploadIcon className="w-5 h-5"/>
+            <span>{t('importData')}</span>
+          </button>
+          <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="application/json" className="hidden"/>
         </div>
       </section>
 

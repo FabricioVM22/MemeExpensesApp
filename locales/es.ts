@@ -97,6 +97,13 @@ export const es: Record<TranslationKey, string> = {
   language: 'Idioma',
   languageDesc: 'Elige el idioma de visualización para la aplicación.',
   selectLanguage: 'Seleccionar Idioma',
+  dataManagement: 'Gestión de Datos',
+  dataManagementDesc: 'Exporta tus datos para hacer una copia de seguridad o importarlos en otro dispositivo.',
+  exportData: 'Exportar Datos',
+  importData: 'Importar Datos',
+  importConfirm: '¿Estás seguro de que quieres importar datos? Esta acción sobrescribirá todos los datos actuales de la aplicación.',
+  importSuccess: '¡Datos importados con éxito!',
+  importErrorInvalidFile: 'Error en la importación. El archivo seleccionado no es válido o está dañado. Por favor, utiliza un archivo de respaldo válido.',
   
   // AddTransactionModal.tsx
   addTransactionTitle: 'Añadir Transacción',

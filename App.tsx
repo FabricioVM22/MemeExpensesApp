@@ -1,4 +1,3 @@
-
 /**
  * @file The main component of the Meme Budget application.
  * This component orchestrates the entire application's state, navigation,
@@ -205,6 +204,10 @@ export default function App(): React.ReactNode {
           setMonthBudget={setMonthBudget} 
           transactions={mainTransactions}
           setTransactions={setTransactions}
+          events={events}
+          setEvents={setEvents}
+          budgets={budgets}
+          setBudgets={setBudgets}
         />;
       default:
         return <Dashboard transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} setActiveView={handleSetView}/>;
