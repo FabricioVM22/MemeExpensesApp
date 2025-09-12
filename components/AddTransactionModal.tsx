@@ -1,111 +1,93 @@
-
 /**
  * @file Renders a modal for adding a new transaction (income or expense).
- * Can also be used to add an expense specifically to an event.
  */
 
 import React, { useState, useEffect } from 'react';
 import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
-import Dropdown from './Dropdown';
 
-/**
- * Props for the AddTransactionModal component.
- */
 interface AddTransactionModalProps {
-  /** Whether the modal is currently open. */
   isOpen: boolean;
-  /** Function to call when the modal should be closed. */
   onClose: () => void;
-  /** Callback function to add the new transaction to the global state. */
   onAddTransaction: (transaction: Omit<Transaction, 'id'>) => void;
-  /** The list of available categories for expenses. */
   categories: Category[];
-  /** Optional ID of an event to associate this transaction with. */
   eventId?: string;
 }
 
-/**
- * A modal component for adding new transactions.
- * @param {AddTransactionModalProps} props - The props for the component.
- * @returns The rendered modal component or null if not open.
- */
 export default function AddTransactionModal({ isOpen, onClose, onAddTransaction, categories, eventId }: AddTransactionModalProps): React.ReactNode {
   const { t } = useLocalization();
-  const isEventExpense = !!eventId;
-  
-  // Form state
-  const [type, setType] = useState<'income' | 'expense'>(isEventExpense ? 'expense' : 'expense');
+
+  const [type, setType] = useState<'income' | 'expense'>('expense');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
-  const [categoryId, setCategoryId] = useState<string>(categories[0]?.id || '');
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [categoryId, setCategoryId] = useState('');
 
-  /**
-   * Effect to reset the form state whenever the modal is opened.
-   * If it's an event expense, it defaults the type to 'expense'.
-   */
   useEffect(() => {
     if (isOpen) {
-      setType(isEventExpense ? 'expense' : 'expense');
+      // Reset form on open
+      setType(eventId ? 'expense' : 'expense');
       setAmount('');
       setDescription('');
-      // Set a default category that is not 'Other' if possible
-      setCategoryId(categories.find(c => c.id !== 'other')?.id || categories[0]?.id || '');
+      setDate(new Date().toISOString().slice(0, 10));
+      setCategoryId('');
     }
-  }, [isOpen, categories, isEventExpense]);
-  
-  /**
-   * Handles the form submission.
-   * Validates the input and calls the onAddTransaction callback.
-   * @param {React.FormEvent} e - The form submission event.
-   */
+  }, [isOpen, eventId]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!amount || !description) {
-      alert(t('errorAllFields'));
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      alert(t('errorAmount'));
+      return;
+    }
+    if (!description.trim()) {
+      alert(t('errorDescription'));
       return;
     }
     if (type === 'expense' && !categoryId) {
-      alert('Please select a category.'); // A simple validation
+      alert(t('errorCategory'));
       return;
     }
-    onAddTransaction({
+
+    const newTransaction: Omit<Transaction, 'id'> = {
       type,
-      amount: parseFloat(amount),
-      description,
-      date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+      amount: parsedAmount,
+      description: description.trim(),
+      date,
       categoryId: type === 'expense' ? categoryId : undefined,
-      eventId,
-    });
+      eventId: eventId,
+    };
+
+    onAddTransaction(newTransaction);
     onClose();
   };
-  
-  const categoryOptions = categories.map(c => ({
-    value: c.id,
-    label: c.name.startsWith('category_') ? t(c.name as TranslationKey) : c.name
-  }));
-
 
   if (!isOpen) return null;
 
   return (
-    // Modal backdrop
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      {/* Modal content */}
       <div className="bg-surface border border-border rounded-2xl shadow-xl w-full max-w-md" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <h2 className="text-xl font-bold text-center">{isEventExpense ? t('addExpenseToEvent') : t('addTransactionTitle')}</h2>
-          
-          {/* Type selector (Income/Expense), hidden for event-specific expenses */}
-          {!isEventExpense && (
-            <div className="grid grid-cols-2 gap-2 rounded-lg bg-input p-1">
-              <button type="button" onClick={() => setType('expense')} className={`py-2 rounded-md transition-colors ${type === 'expense' ? 'bg-surface shadow-md text-danger font-bold' : 'text-text-secondary'}`}>{t('expense')}</button>
-              <button type="button" onClick={() => setType('income')} className={`py-2 rounded-md transition-colors ${type === 'income' ? 'bg-surface shadow-md text-success font-bold' : 'text-text-secondary'}`}>{t('income')}</button>
+          <h2 className="text-xl font-bold text-center">{t('newTransaction')}</h2>
+
+          {/* Type Selector */}
+          {!eventId && ( // Don't show type selector for events, they are always expenses
+            <div>
+              <label className="block text-sm font-medium text-text-secondary">{t('type')}</label>
+              <div className="mt-1 grid grid-cols-2 gap-2 rounded-lg bg-input p-1">
+                <button type="button" onClick={() => setType('expense')} className={`py-2 rounded-md text-sm font-semibold transition-colors ${type === 'expense' ? 'bg-primary text-white' : 'hover:bg-border/50'}`}>
+                  {t('expense')}
+                </button>
+                <button type="button" onClick={() => setType('income')} className={`py-2 rounded-md text-sm font-semibold transition-colors ${type === 'income' ? 'bg-primary text-white' : 'hover:bg-border/50'}`}>
+                  {t('income')}
+                </button>
+              </div>
             </div>
           )}
 
-          {/* Amount Input */}
+          {/* Amount */}
           <div>
             <label htmlFor="amount" className="block text-sm font-medium text-text-secondary">{t('amount')}</label>
             <div className="relative mt-1">
@@ -124,7 +106,7 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
             </div>
           </div>
 
-          {/* Description Input */}
+          {/* Description */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-text-secondary">{t('description')}</label>
             <input
@@ -133,29 +115,46 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
               value={description}
               onChange={e => setDescription(e.target.value)}
               className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
-              placeholder={type === 'expense' ? t('placeholderExpense') : t('placeholderIncome')}
+              placeholder="e.g., Coffee"
             />
           </div>
 
-          {/* Category Selector (for expenses only) */}
+          {/* Date */}
+          <div>
+            <label htmlFor="date" className="block text-sm font-medium text-text-secondary">{t('date')}</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              disabled
+              className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
+
+          {/* Category */}
           {type === 'expense' && (
-            <div className="mt-1">
-              <label id="category-label" className="block text-sm font-medium text-text-secondary">{t('category')}</label>
-              <div className="mt-1">
-                <Dropdown
-                    labelId="category-label"
-                    options={categoryOptions}
-                    selectedValue={categoryId}
-                    onSelect={setCategoryId}
-                />
-              </div>
+            <div>
+              <label htmlFor="category" className="block text-sm font-medium text-text-secondary">{t('category')}</label>
+              <select
+                id="category"
+                value={categoryId}
+                onChange={e => setCategoryId(e.target.value)}
+                className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
+              >
+                <option value="" disabled>{t('selectCategory')}</option>
+                {categories.map(cat => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name.startsWith('category_') ? t(cat.name as TranslationKey) : cat.name}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
-          
+
           {/* Action Buttons */}
           <div className="flex justify-end space-x-3 pt-2">
             <button type="button" onClick={onClose} className="py-2 px-4 rounded-lg bg-input hover:bg-border transition-colors">{t('cancel')}</button>
-            <button type="submit" className="py-2 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary-hover transition-colors">{t('add')}</button>
+            <button type="submit" className="py-2 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary-hover transition-colors">{t('save')}</button>
           </div>
         </form>
       </div>

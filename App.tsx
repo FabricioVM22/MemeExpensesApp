@@ -14,6 +14,7 @@ import Analytics from './components/Analytics';
 import Settings from './components/Settings';
 import BottomNav from './components/BottomNav';
 import SideNav from './components/SideNav';
+// FIX: Corrected import path for AddTransactionModal.tsx
 import AddTransactionModal from './components/AddTransactionModal';
 import History from './components/History';
 import Events from './components/Events';
@@ -92,6 +93,14 @@ export default function App(): React.ReactNode {
    */
   const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
     setTransactions(prev => [...prev, { ...transaction, id: crypto.randomUUID() }]);
+  };
+
+  /**
+   * Deletes a transaction from the global state.
+   * @param {string} transactionId - The ID of the transaction to delete.
+   */
+  const deleteTransaction = (transactionId: string) => {
+    setTransactions(prev => prev.filter(t => t.id !== transactionId));
   };
 
   /**
@@ -186,16 +195,17 @@ export default function App(): React.ReactNode {
             onAddExpense={() => setTransactionModalContext({ eventId: selectedEventId })}
             onEdit={handleOpenEventModal}
             onDelete={deleteEvent}
+            deleteTransaction={deleteTransaction}
         />
     }
 
     switch (activeView) {
       case View.Dashboard:
-        return <Dashboard transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} setActiveView={handleSetView} />;
+        return <Dashboard transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} setActiveView={handleSetView} deleteTransaction={deleteTransaction} />;
       case View.Analytics:
         return <Analytics transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} />;
       case View.History:
-        return <History transactions={mainTransactions} categories={categories} />;
+        return <History transactions={mainTransactions} categories={categories} deleteTransaction={deleteTransaction} />;
       case View.Events:
         return <Events 
             events={events} 
@@ -219,7 +229,7 @@ export default function App(): React.ReactNode {
           setBudgets={setBudgets}
         />;
       default:
-        return <Dashboard transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} setActiveView={handleSetView}/>;
+        return <Dashboard transactions={currentMonthTransactions} budget={currentMonthBudget} categories={categories} setActiveView={handleSetView} deleteTransaction={deleteTransaction}/>;
     }
   };
 

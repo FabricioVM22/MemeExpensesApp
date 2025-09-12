@@ -7,9 +7,9 @@
 import React, { useMemo, useState } from 'react';
 import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
-import { TranslationKey } from '../locales/en';
-import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon, DynamicCategoryIcon } from './icons';
-import { PALETTE } from '../theme';
+import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon } from './icons';
+// FIX: Corrected import path for TransactionItem.tsx
+import TransactionItem from './TransactionItem';
 
 /**
  * Props for the History component.
@@ -19,6 +19,8 @@ interface HistoryProps {
   transactions: Transaction[];
   /** The list of all available categories. */
   categories: Category[];
+  /** Function to delete a transaction. */
+  deleteTransaction: (id: string) => void;
 }
 
 /**
@@ -26,12 +28,15 @@ interface HistoryProps {
  * @param {HistoryProps} props - The props for the component.
  * @returns The rendered history UI.
  */
-export default function History({ transactions, categories }: HistoryProps): React.ReactNode {
+export default function History({ transactions, categories, deleteTransaction }: HistoryProps): React.ReactNode {
     const { t, locale } = useLocalization();
     // State to manage which month's details are currently expanded
     const [expandedMonth, setExpandedMonth] = useState<string | null>(null);
     // State to manage the sort order of transactions within an expanded month
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+    // State to manage the currently swiped item in the list
+    const [activeSwipedItemId, setActiveSwipedItemId] = useState<string | null>(null);
+
 
     /**
      * Helper function to find a category by its ID.
@@ -87,6 +92,16 @@ export default function History({ transactions, categories }: HistoryProps): Rea
         const date = new Date(parseInt(year), parseInt(month) - 1);
         return date.toLocaleString(locale, { month: 'long', year: 'numeric' });
     };
+    
+    /**
+     * Toggles the expanded month, and resets the swiped item state to ensure
+     * a clean view when opening or closing an accordion item.
+     * @param {string | null} monthKey - The month to expand, or null to close.
+     */
+    const toggleMonth = (monthKey: string | null) => {
+      setExpandedMonth(monthKey);
+      setActiveSwipedItemId(null); // Reset swipe state when opening/closing
+    }
 
     if (historicalData.length === 0) {
         return (
@@ -110,7 +125,7 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                         {/* Accordion Header */}
                         <button 
                             className="w-full p-4 text-left flex justify-between items-center"
-                            onClick={() => setExpandedMonth(isExpanded ? null : data.month)}
+                            onClick={() => toggleMonth(isExpanded ? null : data.month)}
                             aria-expanded={isExpanded}
                         >
                             <div>
@@ -146,46 +161,24 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                                     </button>
                                 </div>
                                 {/* List of transactions for the month */}
+                                <div className="space-y-3">
                                 {[...data.transactions]
                                     .sort((a, b) => {
                                         const dateA = new Date(a.date).getTime();
                                         const dateB = new Date(b.date).getTime();
                                         return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
                                     })
-                                    .map(transaction => {
-                                    const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
-                                    let displayName: string;
-                                    let displayColor: string;
-                                    let iconName: string;
-
-                                    if (transaction.type === 'income') {
-                                        displayName = t('income');
-                                        displayColor = PALETTE.green;
-                                        iconName = 'trending-up';
-                                    } else {
-                                        displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
-                                        displayColor = category ? category.color : '#a8a29e';
-                                        iconName = category?.icon || 'tag';
-                                    }
-
-                                    return (
-                                        <div key={transaction.id} className="flex items-center justify-between">
-                                            <div className="flex items-center space-x-3">
-                                                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white" style={{ backgroundColor: displayColor }}>
-                                                    <DynamicCategoryIcon name={iconName} className="w-6 h-6" />
-                                                </div>
-                                                <div>
-                                                    <p className="font-semibold">{transaction.description}</p>
-
-                                                    <p className="text-sm text-text-secondary">{displayName}</p>
-                                                </div>
-                                            </div>
-                                            <p className={`font-bold ${transaction.type === 'income' ? 'text-success' : 'text-danger'}`}>
-                                                {transaction.type === 'income' ? '+' : '-'}{t('currencySymbol')}{transaction.amount.toFixed(2)}
-                                            </p>
-                                        </div>
-                                    );
-                                })}
+                                    .map(transaction => (
+                                        <TransactionItem
+                                          key={transaction.id}
+                                          transaction={transaction}
+                                          getCategory={getCategory}
+                                          onDelete={deleteTransaction}
+                                          activeSwipedItemId={activeSwipedItemId}
+                                          setActiveSwipedItemId={setActiveSwipedItemId}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>

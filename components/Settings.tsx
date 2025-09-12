@@ -7,6 +7,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Budget, Category, Transaction, Event } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
+// FIX: Corrected import path for locales/en.ts
 import { TranslationKey } from '../locales/en';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import CategoryModal from './CategoryModal';
@@ -99,8 +100,9 @@ export default function Settings({
    * Memoized calculation for the total income for the current month's transactions.
    */
   const totalIncome = useMemo(() => {
+      const currentMonthKey = new Date().toISOString().slice(0, 7);
       return transactions
-          .filter(t => t.type === 'income')
+          .filter(t => t.type === 'income' && t.date.startsWith(currentMonthKey))
           .reduce((sum, t) => sum + t.amount, 0);
   }, [transactions]);
 

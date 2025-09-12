@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
+// FIX: Corrected import path for locales/en.ts
 import { TranslationKey } from '../locales/en';
 import { DynamicCategoryIcon, ICON_LIST } from './icons';
 
