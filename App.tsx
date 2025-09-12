@@ -221,9 +221,8 @@ export default function App(): React.ReactNode {
         <div className="relative pb-24 md:pb-8 max-w-3xl mx-auto">
           
           {/* --- Mobile Header --- */}
-          <header className="sticky top-0 z-20 p-4 flex justify-between items-center md:hidden bg-surface border-b border-border">
-            <div className="w-8"></div> {/* Spacer */}
-            <h1 className="text-2xl font-bold text-center text-gradient">Meme Budget</h1>
+          <header className="sticky top-0 z-20 px-4 pt-8 pb-4 flex justify-between items-end md:hidden bg-surface border-b border-border">
+            <h1 className="text-3xl font-bold text-gradient">Meme Budget</h1>
             <ThemeToggle theme={appTheme} setTheme={setAppTheme} />
           </header>
 
