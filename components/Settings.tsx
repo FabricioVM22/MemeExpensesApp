@@ -11,7 +11,7 @@ import { TranslationKey } from '../locales/en';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import CategoryModal from './CategoryModal';
 import Dropdown from './Dropdown';
-import { EditIcon, TrashIcon, DownloadIcon, UploadIcon } from './icons';
+import { EditIcon, TrashIcon, DownloadIcon, UploadIcon, DynamicCategoryIcon } from './icons';
 
 /**
  * Props for the Settings component.
@@ -124,7 +124,13 @@ export default function Settings({
       setCategories(prev => prev.map(c => c.id === category.id ? { ...c, ...category} : c));
       alert(t('editCategorySuccess'));
     } else { // Adding new
-      setCategories(prev => [...prev, { ...category, id: category.name.toLowerCase().replace(/\s+/g, '_') + Date.now() }]);
+      const newCategory: Category = {
+          id: category.name.toLowerCase().replace(/\s+/g, '_') + Date.now(),
+          name: category.name,
+          color: category.color,
+          icon: category.icon,
+      };
+      setCategories(prev => [...prev, newCategory]);
       alert(t('addCategorySuccess'));
     }
   };
@@ -241,8 +247,10 @@ export default function Settings({
             </div>
           {categories.filter(c => c.id !== 'other').map(category => (
             <div key={category.id} className="flex items-center space-x-3">
-              <div className="w-6 h-6 rounded-full" style={{ backgroundColor: category.color }}></div>
-              <label htmlFor={`budget-${category.id}`} className="flex-1 font-medium">{category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name}</label>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${category.color}20`, color: category.color }}>
+                  <DynamicCategoryIcon name={category.icon} className="w-5 h-5" />
+              </div>
+              <label htmlFor={`budget-${category.id}`} className="flex-1 font-medium truncate">{category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name}</label>
               <div className="flex items-center">
                 <span className="text-text-secondary mr-2">{t('currencySymbol')}</span>
                 <input id={`budget-${category.id}`} type="number" placeholder="0.00" value={localBudgets[category.id] || ''} onChange={(e) => handleBudgetChange(category.id, e.target.value)} className="w-28 bg-input rounded-md p-2 text-right focus:ring-2 focus:ring-primary focus:outline-none"/>
@@ -261,7 +269,9 @@ export default function Settings({
           {categories.map(category => (
             <div key={category.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-input">
               <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 rounded-full" style={{ backgroundColor: category.color }}></div>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${category.color}20`, color: category.color }}>
+                    <DynamicCategoryIcon name={category.icon} className="w-5 h-5" />
+                </div>
                 <span className="font-medium">{category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name}</span>
               </div>
               <div className="flex items-center space-x-3">

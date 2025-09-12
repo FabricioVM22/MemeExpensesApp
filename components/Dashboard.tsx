@@ -1,13 +1,13 @@
-
 /**
  * @file Renders the main dashboard view of the application.
  * This component displays the current balance, income/expense summary,
  * budget setup prompts, and a list of recent transactions.
  */
 
+// FIX: `useMemo` is a named export and should be imported with curly braces.
 import React, { useMemo } from 'react';
 import { Transaction, Budget, Category, View } from '../types';
-import { ChartIcon, CogIcon } from './icons';
+import { ChartIcon, CogIcon, DynamicCategoryIcon } from './icons';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
 import { PALETTE } from '../theme';
@@ -25,19 +25,6 @@ interface DashboardProps {
   /** Function to change the active view. */
   setActiveView: (view: View) => void;
 }
-
-/**
- * A circular icon representing a transaction category.
- * @param {object} props - The component props.
- * @param {string} props.color - The background color of the icon.
- * @param {string} props.categoryName - The name of the category to display the first letter of.
- * @returns A category icon component.
- */
-const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
-    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
-        {categoryName.charAt(0)}
-    </div>
-);
 
 /**
  * The main dashboard component.
@@ -129,19 +116,24 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
               const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
               let displayName: string;
               let displayColor: string;
+              let iconName: string;
 
               if (transaction.type === 'income') {
                   displayName = t('income');
                   displayColor = PALETTE.green; 
+                  iconName = 'trending-up';
               } else {
                   displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
                   displayColor = category ? category.color : '#a8a29e'; // Stone from constants
+                  iconName = category?.icon || 'tag';
               }
 
               return (
                 <div key={transaction.id} className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <CategoryIcon color={displayColor} categoryName={displayName}/>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white" style={{ backgroundColor: displayColor }}>
+                        <DynamicCategoryIcon name={iconName} className="w-6 h-6" />
+                    </div>
                     <div>
                       <p className="font-semibold">{transaction.description}</p>
                       <p className="text-sm text-text-secondary">{displayName}</p>

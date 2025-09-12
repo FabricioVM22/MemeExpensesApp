@@ -80,6 +80,7 @@ export const es: Record<TranslationKey, string> = {
   deleteCategory: 'Eliminar Categoría',
   categoryName: 'Nombre de la Categoría',
   categoryColor: 'Color de la Categoría',
+  categoryIcon: 'Ícono',
   confirmDeleteTitle: 'Eliminar Categoría',
   confirmDeleteDesc: '¿Estás seguro de que quieres eliminar esta categoría? Todas las transacciones asociadas se moverán a "Otro".',
   deleteCategorySuccess: 'Categoría eliminada. Las transacciones se movieron a "Otro".',

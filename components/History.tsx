@@ -1,4 +1,3 @@
-
 /**
  * @file Renders the history view.
  * This component displays past months' financial summaries in an accordion layout.
@@ -9,7 +8,7 @@ import React, { useMemo, useState } from 'react';
 import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
-import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon } from './icons';
+import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon, DynamicCategoryIcon } from './icons';
 import { PALETTE } from '../theme';
 
 /**
@@ -21,19 +20,6 @@ interface HistoryProps {
   /** The list of all available categories. */
   categories: Category[];
 }
-
-/**
- * A circular icon representing a transaction category.
- * @param {object} props - The component props.
- * @param {string} props.color - The background color of the icon.
- * @param {string} props.categoryName - The name of the category.
- * @returns A category icon component.
- */
-const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
-    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
-        {categoryName.charAt(0)}
-    </div>
-);
 
 /**
  * The history component, displaying transaction history grouped by month.
@@ -170,19 +156,24 @@ export default function History({ transactions, categories }: HistoryProps): Rea
                                     const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
                                     let displayName: string;
                                     let displayColor: string;
+                                    let iconName: string;
 
                                     if (transaction.type === 'income') {
                                         displayName = t('income');
-                                        displayColor = PALETTE.green; 
+                                        displayColor = PALETTE.green;
+                                        iconName = 'trending-up';
                                     } else {
                                         displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
                                         displayColor = category ? category.color : '#a8a29e';
+                                        iconName = category?.icon || 'tag';
                                     }
 
                                     return (
                                         <div key={transaction.id} className="flex items-center justify-between">
                                             <div className="flex items-center space-x-3">
-                                                <CategoryIcon color={displayColor} categoryName={displayName}/>
+                                                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white" style={{ backgroundColor: displayColor }}>
+                                                    <DynamicCategoryIcon name={iconName} className="w-6 h-6" />
+                                                </div>
                                                 <div>
                                                     <p className="font-semibold">{transaction.description}</p>
 

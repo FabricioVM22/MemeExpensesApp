@@ -1,4 +1,3 @@
-
 /**
  * @file Renders the detailed view for a single event budget.
  * This component displays a summary of the event's budget, spending progress,
@@ -9,7 +8,7 @@ import React from 'react';
 import { Event, Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
-import { ArrowLeftIcon, PlusIcon, EditIcon, TrashIcon } from './icons';
+import { ArrowLeftIcon, PlusIcon, EditIcon, TrashIcon, DynamicCategoryIcon } from './icons';
 import { PALETTE } from '../theme';
 
 /**
@@ -31,19 +30,6 @@ interface EventDetailProps {
   /** Callback to delete this event. */
   onDelete: (eventId: string) => void;
 }
-
-/**
- * A circular icon representing a transaction category.
- * @param {object} props - The component props.
- * @param {string} props.color - The background color of the icon.
- * @param {string} props.categoryName - The name of the category.
- * @returns A category icon component.
- */
-const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
-    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
-        {categoryName.charAt(0)}
-    </div>
-);
 
 /**
  * The component for displaying the details of a single event.
@@ -137,11 +123,14 @@ export default function EventDetail({ event, transactions, categories, onBack, o
                             const category = getCategory(transaction.categoryId);
                             const displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
                             const displayColor = category ? category.color : '#a8a29e';
+                            const iconName = category?.icon || 'tag';
 
                             return (
                                 <div key={transaction.id} className="flex items-center justify-between">
                                     <div className="flex items-center space-x-3">
-                                        <CategoryIcon color={displayColor} categoryName={displayName}/>
+                                        <div className="w-10 h-10 rounded-full flex items-center justify-center text-white" style={{ backgroundColor: displayColor }}>
+                                            <DynamicCategoryIcon name={iconName} className="w-6 h-6" />
+                                        </div>
                                         <div>
                                             <p className="font-semibold">{transaction.description}</p>
                                             <p className="text-sm text-text-secondary">{displayName}</p>

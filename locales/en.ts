@@ -78,6 +78,7 @@ export const en = {
   deleteCategory: 'Delete Category',
   categoryName: 'Category Name',
   categoryColor: 'Category Color',
+  categoryIcon: 'Icon',
   confirmDeleteTitle: 'Delete Category',
   confirmDeleteDesc: 'Are you sure you want to delete this category? All associated transactions will be moved to "Other".',
   deleteCategorySuccess: 'Category deleted. Transactions moved to "Other".',

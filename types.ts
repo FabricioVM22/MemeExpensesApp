@@ -45,6 +45,8 @@ export interface Category {
   name: string;
   /** A hex color code associated with the category for UI elements. */
   color: string;
+  /** The name of the icon associated with the category. */
+  icon: string;
 }
 
 /**

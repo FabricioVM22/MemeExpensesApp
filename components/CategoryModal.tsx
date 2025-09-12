@@ -1,4 +1,3 @@
-
 /**
  * @file Renders a modal for adding or editing a spending category.
  * It allows users to set a category name and choose a color.
@@ -8,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
 import { TranslationKey } from '../locales/en';
+import { DynamicCategoryIcon, ICON_LIST } from './icons';
 
 /**
  * Props for the CategoryModal component.
@@ -39,6 +39,7 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
   // Form state
   const [name, setName] = useState('');
   const [color, setColor] = useState(COLORS[0]);
+  const [icon, setIcon] = useState(ICON_LIST[0]);
 
   /**
    * Effect to populate the form fields when the modal opens.
@@ -52,9 +53,11 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
         // Display translated name for default categories, or actual name for custom ones
         setName(categoryName.startsWith('category_') ? t(categoryName as TranslationKey) : categoryName);
         setColor(categoryToEdit.color);
+        setIcon(categoryToEdit.icon);
       } else {
         setName('');
-        setColor(COLORS[0]);
+        setColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
+        setIcon('tag');
       }
     }
   }, [isOpen, categoryToEdit, t]);
@@ -74,6 +77,7 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
       id: categoryToEdit?.id,
       name: name.trim(),
       color,
+      icon,
     });
     onClose();
   };
@@ -112,6 +116,24 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
                   style={{ backgroundColor: c }}
                   aria-label={c}
                 />
+              ))}
+            </div>
+          </div>
+          
+          {/* Icon Picker */}
+          <div>
+            <label className="block text-sm font-medium text-text-secondary">{t('categoryIcon')}</label>
+            <div className="mt-2 grid grid-cols-8 gap-2">
+              {ICON_LIST.filter(i => !['trending-up'].includes(i)).map(iconName => (
+                <button
+                  type="button"
+                  key={iconName}
+                  onClick={() => setIcon(iconName)}
+                  className={`w-full aspect-square rounded-lg flex items-center justify-center transition-colors ${icon === iconName ? 'bg-primary/20 text-primary' : 'bg-input text-text-secondary hover:bg-border'}`}
+                  aria-label={iconName}
+                >
+                  <DynamicCategoryIcon name={iconName} className="w-6 h-6" />
+                </button>
               ))}
             </div>
           </div>

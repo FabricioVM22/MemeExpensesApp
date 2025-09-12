@@ -128,3 +128,89 @@ export const UploadIcon = (props: IconProps) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
   </svg>
 );
+
+
+// --- Category Icons ---
+
+const ShoppingCartIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.343 1.087-.835l1.821-6.831a1.5 1.5 0 00-1.422-2.098H5.828a1.5 1.5 0 00-1.422 2.098l1.821 6.831zM16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+  </svg>
+);
+
+const CarIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 013.375-3.375h9.75a3.375 3.375 0 013.375 3.375v1.875m-17.25 4.5h15.75m-15.75 0v-4.5A2.25 2.25 0 015.625 7.5h12.75a2.25 2.25 0 012.25 2.25v4.5" />
+  </svg>
+);
+
+const HomeModernIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5A2.25 2.25 0 0021 18.75V9.574c0-.53-.234-1.034-.632-1.388l-4.5-4.25a2.25 2.25 0 00-3.184 0l-4.5 4.25A2.25 2.25 0 003 9.574v9.176A2.25 2.25 0 005.25 21h4.5m0 0v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21" />
+  </svg>
+);
+
+const TicketIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-1.5h5.25m-5.25 0h3m-3 0h-1.5m3 0h-1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75m9-3.75h-5.25m5.25 0h-3m3 0h1.5m-3 0h1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75M9 12h1.5M9 12h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M9 12h1.5m-1.5 0h1.5m-1.5 0H9m1.5 0H9m1.5 0H9m1.5 0h1.5M12 9h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5m-1.5 0h-1.5M12 9h1.5m-1.5 0H12m1.5 0H12m1.5 0h1.5m-1.5 0h1.5m3-3h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M15 6h1.5m-1.5 0H15m1.5 0H15m1.5 0h1.5m-1.5 0h1.5" />
+  </svg>
+);
+
+const HeartPulseIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.5 10.5l-2.5 2.5-2.5-2.5-2.5 2.5" />
+  </svg>
+);
+
+const ShoppingBagIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.658-.463 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+  </svg>
+);
+
+const RestaurantIcon = (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+    </svg>
+);
+
+const LightBulbIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a14.994 14.994 0 01-3.75 0M9 10.5h6m-6 3h6m-6-6h6l-2.25-3.375a1.5 1.5 0 00-2.5 0L9 10.5z" />
+  </svg>
+);
+
+const TagIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-1.5h5.25m-5.25 0h3m-3 0h-1.5m3 0h-1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75M9 12h1.5M9 12h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M9 12h1.5m-1.5 0h1.5m-1.5 0H9m1.5 0H9m1.5 0H9m1.5 0h1.5M12 9h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5m-1.5 0h-1.5M12 9h1.5m-1.5 0H12m1.5 0H12m1.5 0h1.5m-1.5 0h1.5m3-3h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M15 6h1.5m-1.5 0H15m1.5 0H15m1.5 0h1.5m-1.5 0h1.5" />
+  </svg>
+);
+
+const TrendingUpIcon = (props: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-.625m3.75.625V3.375" />
+  </svg>
+);
+
+const iconMap: Record<string, React.FC<IconProps>> = {
+    'shopping-cart': ShoppingCartIcon,
+    'car': CarIcon,
+    'home-modern': HomeModernIcon,
+    'ticket': TicketIcon,
+    'heart-pulse': HeartPulseIcon,
+    'shopping-bag': ShoppingBagIcon,
+    'restaurant': RestaurantIcon,
+    'light-bulb': LightBulbIcon,
+    'tag': TagIcon,
+    'trending-up': TrendingUpIcon,
+    'gift': GiftIcon,
+    'plus': PlusIcon,
+};
+
+export const ICON_LIST = Object.keys(iconMap);
+
+export const DynamicCategoryIcon = ({ name, ...props }: { name: string } & IconProps) => {
+    const IconComponent = iconMap[name] || TagIcon;
+    return <IconComponent {...props} />;
+};
