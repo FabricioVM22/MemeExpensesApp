@@ -23,14 +23,14 @@ import AddEventModal from './components/AddEventModal';
 import ThemeToggle from './components/ThemeToggle';
 import { PlusIcon } from './components/icons';
 import { useLocalization } from './context/LocalizationContext';
-import { lightTheme, darkTheme } from './theme';
+import { lightTheme, darkTheme, roseTheme } from './theme';
 import { generateThemeCss } from './utils/theme';
 
 
 /**
  * Defines the available theme options.
  */
-type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark' | 'rose';
 
 /**
  * The root component for the Meme Budget application.
@@ -44,7 +44,7 @@ export default function App(): React.ReactNode {
   const [categories, setCategories] = useLocalStorage<Category[]>('categories', DEFAULT_CATEGORIES);
   const [transactions, setTransactions] = useLocalStorage<Transaction[]>('transactions', []);
   const [budgets, setBudgets] = useLocalStorage<Record<string, Budget[]>>('budgets', {});
-  const [appTheme, setAppTheme] = useLocalStorage<Theme>('theme', 'dark');
+  const [appTheme, setAppTheme] = useLocalStorage<Theme>('theme', 'rose');
   const [events, setEvents] = useLocalStorage<Event[]>('events', []);
 
   // Modal and view-specific state
@@ -59,12 +59,19 @@ export default function App(): React.ReactNode {
    */
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
+    root.classList.remove('light', 'dark', 'rose');
     root.classList.add(appTheme);
     
     document.body.className = 'bg-background transition-colors duration-300';
 
-    const theme = appTheme === 'light' ? lightTheme : darkTheme;
+    let theme;
+    if (appTheme === 'light') {
+      theme = lightTheme;
+    } else if (appTheme === 'dark') {
+      theme = darkTheme;
+    } else {
+      theme = roseTheme;
+    }
     const themeCss = generateThemeCss(theme);
     
     let styleTag = document.getElementById('app-theme');

@@ -22,9 +22,9 @@ interface SideNavProps {
   /** Function to open the 'Add Transaction' modal. */
   openModal: () => void;
   /** The current application theme. */
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'rose';
   /** Function to set the application theme. */
-  setTheme: (theme: 'light' | 'dark') => void;
+  setTheme: (theme: 'light' | 'dark' | 'rose') => void;
 }
 
 /**
