@@ -1,6 +1,6 @@
 /**
  * @file Renders a modal for adding or editing a spending category.
- * It allows users to set a category name and choose a color.
+ * It allows users to set a category name, choose a color, and select a representative icon.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -17,54 +17,57 @@ interface CategoryModalProps {
   isOpen: boolean;
   /** Function to call when the modal should be closed. */
   onClose: () => void;
-  /** Callback function to save the new or updated category. */
+  /** Callback function to save the new or updated category data. */
   onSave: (category: Omit<Category, 'id'> & { id?: string }) => void;
-  /** The category to edit. If null, the modal is in 'add' mode. */
+  /** The category to edit. If null, the modal is in 'add new' mode. */
   categoryToEdit: Category | null;
 }
 
-/** A predefined palette of colors for categories. */
+/** A predefined palette of colors for users to choose from for their categories. */
 const COLORS = [
   '#ef4444', '#f97316', '#eab308', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#6b7280', 
   '#f43f5e', '#d97706', '#65a30d', '#059669', '#0ea5e9', '#6366f1', '#d946ef', '#78716c'
 ];
 
 /**
- * A modal component for creating and editing categories.
+ * A modal component for creating and editing categories. It provides inputs for
+ * the category name, a color palette picker, and an icon selector.
  * @param {CategoryModalProps} props - The props for the component.
- * @returns The rendered modal component or null if not open.
+ * @returns {React.ReactNode} The rendered modal component or null if not open.
  */
 export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit }: CategoryModalProps): React.ReactNode {
   const { t } = useLocalization();
-  // Form state
+  // Form state for category properties
   const [name, setName] = useState('');
   const [color, setColor] = useState(COLORS[0]);
   const [icon, setIcon] = useState(ICON_LIST[0]);
 
   /**
-   * Effect to populate the form fields when the modal opens.
-   * If `categoryToEdit` is provided, it fills the form with the category's data.
-   * Otherwise, it resets the form to its default state for a new category.
+   * An effect to populate the form fields when the modal opens.
+   * If `categoryToEdit` is provided, it fills the form with that category's existing data.
+   * Otherwise, it resets the form to a default state for creating a new category.
    */
   useEffect(() => {
     if (isOpen) {
       if (categoryToEdit) {
         const categoryName = categoryToEdit.name;
-        // Display translated name for default categories, or actual name for custom ones
+        // Display translated name for default categories, or the actual name for custom ones
         setName(categoryName.startsWith('category_') ? t(categoryName as TranslationKey) : categoryName);
         setColor(categoryToEdit.color);
         setIcon(categoryToEdit.icon);
       } else {
+        // Reset to defaults for a new category
         setName('');
-        setColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
-        setIcon('tag');
+        setColor(COLORS[Math.floor(Math.random() * COLORS.length)]); // Start with a random color
+        setIcon('tag'); // Default icon
       }
     }
   }, [isOpen, categoryToEdit, t]);
 
   /**
    * Handles the form submission.
-   * Validates the input and calls the onSave callback.
+   * It validates that a name is present, then calls the onSave callback with the
+   * category data, and finally closes the modal.
    * @param {React.FormEvent} e - The form submission event.
    */
   const handleSubmit = (e: React.FormEvent) => {
@@ -100,6 +103,7 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
               onChange={e => setName(e.target.value)}
               className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
               placeholder={t('category_groceries')}
+              disabled={categoryToEdit?.name.startsWith('category_')}
             />
           </div>
 
@@ -114,7 +118,7 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
                   onClick={() => setColor(c)}
                   className={`w-full aspect-square rounded-full transition-transform transform hover:scale-110 ${color === c ? 'ring-2 ring-primary ring-offset-2 ring-offset-surface' : ''}`}
                   style={{ backgroundColor: c }}
-                  aria-label={c}
+                  aria-label={`Select color ${c}`}
                 />
               ))}
             </div>
@@ -130,7 +134,7 @@ export default function CategoryModal({ isOpen, onClose, onSave, categoryToEdit 
                   key={iconName}
                   onClick={() => setIcon(iconName)}
                   className={`w-full aspect-square rounded-lg flex items-center justify-center transition-colors ${icon === iconName ? 'bg-primary/20 text-primary' : 'bg-input text-text-secondary hover:bg-border'}`}
-                  aria-label={iconName}
+                  aria-label={`Select icon ${iconName}`}
                 >
                   <DynamicCategoryIcon name={iconName} className="w-6 h-6" />
                 </button>

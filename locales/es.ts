@@ -135,4 +135,5 @@ export const es: Record<TranslationKey, string> = {
   confirmDeleteEventDesc: '¿Estás seguro? Eliminar este evento también eliminará permanentemente todas sus transacciones asociadas.',
   deleteEventSuccess: '¡Evento eliminado con éxito!',
   editEventSuccess: '¡Evento actualizado con éxito!',
+  loveMessage: 'Hecho con ❤️ para alguien especial',
 };

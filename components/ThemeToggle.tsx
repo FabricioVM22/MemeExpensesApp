@@ -1,6 +1,6 @@
-
 /**
- * @file Renders a button to toggle between light and dark themes.
+ * @file Renders a button to toggle between the application's available themes
+ * (light, dark, and rose).
  */
 
 import React from 'react';
@@ -17,13 +17,14 @@ interface ThemeToggleProps {
 }
 
 /**
- * A button component that switches the application's theme.
+ * A button component that cycles through the application's themes.
+ * The icon displayed represents the theme that will be activated on click.
  * @param {ThemeToggleProps} props - The props for the component.
- * @returns The rendered theme toggle button.
+ * @returns {React.ReactNode} The rendered theme toggle button.
  */
 export default function ThemeToggle({ theme, setTheme }: ThemeToggleProps): React.ReactNode {
   /**
-   * Toggles the theme between 'light', 'dark', and 'rose'.
+   * Toggles the theme in a specific cycle: light -> dark -> rose -> light.
    */
   const toggleTheme = () => {
     if (theme === 'light') {
@@ -35,11 +36,18 @@ export default function ThemeToggle({ theme, setTheme }: ThemeToggleProps): Reac
     }
   };
 
+  /**
+   * Determines which icon to display based on the current theme.
+   * The icon always represents the *next* theme in the cycle.
+   * @returns {React.ReactNode} The icon component to render.
+   */
   const renderIcon = () => {
-    // Show the icon for the theme you're about to switch TO
+    // From 'light', the next theme is 'dark' (MoonIcon)
     if (theme === 'light') return <MoonIcon className="w-6 h-6" />;
+    // From 'dark', the next theme is 'rose' (HeartIcon)
     if (theme === 'dark') return <HeartIcon className="w-6 h-6" />;
-    return <SunIcon className="w-6 h-6" />; // From 'rose' back to 'light'
+    // From 'rose', the next theme is 'light' (SunIcon)
+    return <SunIcon className="w-6 h-6" />;
   }
 
   return (

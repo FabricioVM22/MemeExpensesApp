@@ -1,12 +1,15 @@
 /**
- * @file Defines constant values used throughout the application.
+ * @file Defines constant values used throughout the application, such as default settings
+ * and initial data structures.
  */
 
 import { Category } from './types';
 
 /**
- * A list of default categories provided to the user on first use.
- * Category names starting with 'category_' are treated as translation keys.
+ * A list of default categories provided to the user on their first use of the app.
+ * Each category includes a unique ID, a display name, a color, and an icon identifier.
+ * Category names starting with 'category_' are treated as translation keys by the
+ * localization context to support multiple languages.
  */
 export const DEFAULT_CATEGORIES: Category[] = [
   { id: 'groceries', name: 'category_groceries', color: '#10b981', icon: 'shopping-cart' },

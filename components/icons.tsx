@@ -1,12 +1,13 @@
 /**
  * @file A library of SVG icon components used throughout the application.
- * Each icon is a stateless functional component for easy use.
+ * Each icon is a stateless functional component for easy use and consistent styling.
+ * This file also exports a dynamic icon component and a list of available icon names.
  */
 import React from 'react';
 
 /**
- * A type alias for standard SVG element props. This provides type safety
- * for attributes like `className`, `width`, `height`, etc., on the icon components.
+ * A type alias for standard SVG element props (`className`, `width`, `height`, etc.).
+ * This provides type safety and autocompletion for props passed to icon components.
  */
 type IconProps = React.SVGProps<SVGSVGElement>;
 
@@ -31,21 +32,21 @@ export const CogIcon = (props: IconProps) => (
   </svg>
 );
 
-/** Plus/Add icon. */
+/** Plus/Add icon for buttons. */
 export const PlusIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
   </svg>
 );
 
-/** Edit/Pencil icon. */
+/** Edit/Pencil icon for edit actions. */
 export const EditIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
   </svg>
 );
 
-/** Delete/Trash icon. */
+/** Delete/Trash icon for delete actions. */
 export const TrashIcon = (props: IconProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.124-2.033-2.124H8.033c-1.12 0-2.033.944-2.033 2.124v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -59,42 +60,42 @@ export const HistoryIcon = (props: IconProps) => (
   </svg>
 );
 
-/** Chevron Down icon, used for accordions/collapsibles. */
+/** Chevron Down icon, for accordions and dropdowns. */
 export const ChevronDownIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
   </svg>
 );
 
-/** Chevron Up icon, used for accordions/collapsibles. */
+/** Chevron Up icon, for accordions and dropdowns. */
 export const ChevronUpIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
   </svg>
 );
 
-/** Arrow Up/Down icon, used for sorting controls. */
+/** Arrow Up/Down icon, for sorting controls. */
 export const ArrowUpDownIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
   </svg>
 );
 
-/** Sun icon, for light theme toggle. */
+/** Sun icon, for the light theme toggle. */
 export const SunIcon = (props: IconProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
     </svg>
 );
 
-/** Moon icon, for dark theme toggle. */
+/** Moon icon, for the dark theme toggle. */
 export const MoonIcon = (props: IconProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
     </svg>
 );
 
-/** Heart icon, for rose theme toggle. */
+/** Heart icon, for the rose theme toggle. */
 export const HeartIcon = (props: IconProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
@@ -115,84 +116,88 @@ export const ArrowLeftIcon = (props: IconProps) => (
   </svg>
 );
 
-/** Download icon, for data export. */
+/** Download icon, for the data export button. */
 export const DownloadIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
   </svg>
 );
 
-/** Upload icon, for data import. */
+/** Upload icon, for the data import button. */
 export const UploadIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
   </svg>
 );
 
+// --- Category Specific Icons ---
 
-// --- Category Icons ---
-
+/** Icon for 'Groceries' category. */
 const ShoppingCartIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.343 1.087-.835l1.821-6.831a1.5 1.5 0 00-1.422-2.098H5.828a1.5 1.5 0 00-1.422 2.098l1.821 6.831zM16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
   </svg>
 );
-
+/** Icon for 'Transport' category. */
 const CarIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 013.375-3.375h9.75a3.375 3.375 0 013.375 3.375v1.875m-17.25 4.5h15.75m-15.75 0v-4.5A2.25 2.25 0 015.625 7.5h12.75a2.25 2.25 0 012.25 2.25v4.5" />
   </svg>
 );
-
+/** Icon for 'Housing' category. */
 const HomeModernIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5A2.25 2.25 0 0021 18.75V9.574c0-.53-.234-1.034-.632-1.388l-4.5-4.25a2.25 2.25 0 00-3.184 0l-4.5 4.25A2.25 2.25 0 003 9.574v9.176A2.25 2.25 0 005.25 21h4.5m0 0v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21" />
   </svg>
 );
-
+/** Icon for 'Entertainment' category. */
 const TicketIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-1.5h5.25m-5.25 0h3m-3 0h-1.5m3 0h-1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75m9-3.75h-5.25m5.25 0h-3m3 0h1.5m-3 0h1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75M9 12h1.5M9 12h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M9 12h1.5m-1.5 0h1.5m-1.5 0H9m1.5 0H9m1.5 0H9m1.5 0h1.5M12 9h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5m-1.5 0h-1.5M12 9h1.5m-1.5 0H12m1.5 0H12m1.5 0h1.5m-1.5 0h1.5m3-3h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M15 6h1.5m-1.5 0H15m1.5 0H15m1.5 0h1.5m-1.5 0h1.5" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-1.5h5.25m-5.25 0h3m-3 0h-1.5m3 0h-1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75M9 12h1.5M9 12h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M9 12h1.5m-1.5 0h1.5m-1.5 0H9m1.5 0H9m1.5 0H9m1.5 0h1.5M12 9h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5m-1.5 0h-1.5M12 9h1.5m-1.5 0H12m1.5 0H12m1.5 0h1.5m-1.5 0h1.5m3-3h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M15 6h1.5m-1.5 0H15m1.5 0H15m1.5 0h1.5m-1.5 0h1.5" />
   </svg>
 );
-
+/** Icon for 'Health' category. */
 const HeartPulseIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.5 10.5l-2.5 2.5-2.5-2.5-2.5 2.5" />
   </svg>
 );
-
+/** Icon for 'Shopping' category. */
 const ShoppingBagIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.658-.463 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
   </svg>
 );
-
+/** Icon for 'Food & Dining' category. */
 const RestaurantIcon = (props: IconProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
     </svg>
 );
-
+/** Icon for 'Utilities' category. */
 const LightBulbIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a14.994 14.994 0 01-3.75 0M9 10.5h6m-6 3h6m-6-6h6l-2.25-3.375a1.5 1.5 0 00-2.5 0L9 10.5z" />
   </svg>
 );
-
+/** Icon for 'Other' category. */
 const TagIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-1.5h5.25m-5.25 0h3m-3 0h-1.5m3 0h-1.5m-6 0h1.5m5.25 0h3.75m-3.75 0h-1.5m3 0h1.5m-3 0h-1.5m1.5 0h-1.5m3.75 0h-3.75M9 12h1.5M9 12h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M9 12h1.5m-1.5 0h1.5m-1.5 0H9m1.5 0H9m1.5 0H9m1.5 0h1.5M12 9h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5m-1.5 0h-1.5M12 9h1.5m-1.5 0H12m1.5 0H12m1.5 0h1.5m-1.5 0h1.5m3-3h1.5m-1.5 0h-1.5m1.5 0h-1.5m1.5 0h1.5m-1.5 0h1.5M15 6h1.5m-1.5 0H15m1.5 0H15m1.5 0h1.5m-1.5 0h1.5" />
   </svg>
 );
-
+/** Icon for 'Income' transactions. */
 const TrendingUpIcon = (props: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-.625m3.75.625V3.375" />
   </svg>
 );
 
+/**
+ * A mapping from icon string identifiers to their respective React components.
+ * Used by `DynamicCategoryIcon` to render an icon based on its name.
+ */
 const iconMap: Record<string, React.FC<IconProps>> = {
     'shopping-cart': ShoppingCartIcon,
     'car': CarIcon,
@@ -208,9 +213,20 @@ const iconMap: Record<string, React.FC<IconProps>> = {
     'plus': PlusIcon,
 };
 
+/**
+ * An array of all available category icon names.
+ * Used for populating the icon picker in the CategoryModal.
+ */
 export const ICON_LIST = Object.keys(iconMap);
 
+/**
+ * A component that dynamically renders an icon based on a string name.
+ * It looks up the icon component in `iconMap` and renders it, falling
+ * back to `TagIcon` if the name is not found.
+ * @param {{ name: string } & IconProps} props - The component props, including the icon's name.
+ * @returns {React.ReactNode} The rendered SVG icon component.
+ */
 export const DynamicCategoryIcon = ({ name, ...props }: { name: string } & IconProps) => {
-    const IconComponent = iconMap[name] || TagIcon;
+    const IconComponent = iconMap[name] || TagIcon; // Default to TagIcon
     return <IconComponent {...props} />;
 };

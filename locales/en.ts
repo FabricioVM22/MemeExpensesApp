@@ -133,6 +133,7 @@ export const en = {
   confirmDeleteEventDesc: 'Are you sure? Deleting this event will also permanently remove all of its associated transactions.',
   deleteEventSuccess: 'Event deleted successfully!',
   editEventSuccess: 'Event updated successfully!',
+  loveMessage: 'Made with ❤️ for someone special',
 };
 
 /**

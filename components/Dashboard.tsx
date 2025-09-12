@@ -63,10 +63,6 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
 
   return (
     <div className="space-y-6">
-      {/* Love message */}
-      <div className="text-center text-text-secondary text-sm animate-pulse">
-        Hecho con ❤️ para alguien especial
-      </div>
       {/* Balance and Summary Section */}
       <section>
         <div className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-4">
