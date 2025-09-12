@@ -1,16 +1,15 @@
-
 /**
  * @file Renders the main dashboard view of the application.
  * This component displays the current balance, income/expense summary,
  * budget setup prompts, and a list of recent transactions.
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Transaction, Budget, Category, View } from '../types';
 import { ChartIcon, CogIcon } from './icons';
 import { useLocalization } from '../context/LocalizationContext';
-import { TranslationKey } from '../locales/en';
-import { PALETTE } from '../theme';
+// FIX: Corrected import path for TransactionItem.tsx
+import TransactionItem from './TransactionItem';
 
 /**
  * Props for the Dashboard component.
@@ -24,28 +23,18 @@ interface DashboardProps {
   categories: Category[];
   /** Function to change the active view. */
   setActiveView: (view: View) => void;
+  /** Function to delete a transaction. */
+  deleteTransaction: (id: string) => void;
 }
-
-/**
- * A circular icon representing a transaction category.
- * @param {object} props - The component props.
- * @param {string} props.color - The background color of the icon.
- * @param {string} props.categoryName - The name of the category to display the first letter of.
- * @returns A category icon component.
- */
-const CategoryIcon = ({ color, categoryName }: { color: string; categoryName: string }) => (
-    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
-        {categoryName.charAt(0)}
-    </div>
-);
 
 /**
  * The main dashboard component.
  * @param {DashboardProps} props - The props for the component.
  * @returns The rendered dashboard UI.
  */
-export default function Dashboard({ transactions, budget, categories, setActiveView }: DashboardProps): React.ReactNode {
+export default function Dashboard({ transactions, budget, categories, setActiveView, deleteTransaction }: DashboardProps): React.ReactNode {
   const { t } = useLocalization();
+  const [activeSwipedItemId, setActiveSwipedItemId] = useState<string | null>(null);
 
   /**
    * Memoized calculation of total income, expenses, and current balance for the month.
@@ -121,34 +110,16 @@ export default function Dashboard({ transactions, budget, categories, setActiveV
         <h2 className="text-lg font-semibold mb-2 text-text-primary">{t('recentTransactions')}</h2>
         <div className="bg-surface border border-border rounded-2xl shadow-lg p-4 space-y-3">
           {recentTransactions.length > 0 ? (
-            recentTransactions.map(transaction => {
-              const category = transaction.categoryId ? getCategory(transaction.categoryId) : undefined;
-              let displayName: string;
-              let displayColor: string;
-
-              if (transaction.type === 'income') {
-                  displayName = t('income');
-                  displayColor = PALETTE.green; 
-              } else {
-                  displayName = category ? (category.name.startsWith('category_') ? t(category.name as TranslationKey) : category.name) : t('category_other');
-                  displayColor = category ? category.color : '#a8a29e'; // Stone from constants
-              }
-
-              return (
-                <div key={transaction.id} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CategoryIcon color={displayColor} categoryName={displayName}/>
-                    <div>
-                      <p className="font-semibold">{transaction.description}</p>
-                      <p className="text-sm text-text-secondary">{displayName}</p>
-                    </div>
-                  </div>
-                  <p className={`font-bold ${transaction.type === 'income' ? 'text-success' : 'text-danger'}`}>
-                    {transaction.type === 'income' ? '+' : '-'}{t('currencySymbol')}{transaction.amount.toFixed(2)}
-                  </p>
-                </div>
-              );
-            })
+            recentTransactions.map(transaction => (
+              <TransactionItem
+                key={transaction.id}
+                transaction={transaction}
+                getCategory={getCategory}
+                onDelete={deleteTransaction}
+                activeSwipedItemId={activeSwipedItemId}
+                setActiveSwipedItemId={setActiveSwipedItemId}
+              />
+            ))
           ) : (
             <p className="text-center text-text-secondary py-4">{t('noTransactions')}</p>
           )}

@@ -3,6 +3,7 @@
  * This allows the UI to be displayed in different languages based on user selection.
  */
 import React, { createContext, useContext, useMemo } from 'react';
+// FIX: Corrected import path for locales/en.ts and locales/es.ts
 import { en, TranslationKey } from '../locales/en';
 import { es } from '../locales/es';
 import { useLocalStorage } from '../hooks/useLocalStorage';

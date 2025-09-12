@@ -1,3 +1,4 @@
+
 /**
  * @file Centralizes the color palette and theme definitions for the Meme Budget app.
  * This file defines the core colors and maps them to semantic roles for both
@@ -64,6 +65,24 @@ export const darkTheme = {
   input: '220 20% 25%',
   gradientFrom: PALETTE.gradientFrom,
   gradientTo: PALETTE.gradientTo,
+};
+
+/**
+ * A romantic theme with soft pinks and warm tones.
+ */
+export const roseTheme = {
+  background: '345 60% 96%',
+  surface: '345 50% 92%',
+  primary: '330 80% 60%',
+  primaryHover: '330 80% 65%',
+  success: '140 60% 50%',
+  danger: '0 80% 65%',
+  textPrimary: '340 10% 25%',
+  textSecondary: '340 5% 50%',
+  border: '345 30% 85%',
+  input: '345 40% 90%',
+  gradientFrom: '330 80% 60%',
+  gradientTo: '280 80% 70%',
 };
 
 /**

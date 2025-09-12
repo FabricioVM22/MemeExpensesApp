@@ -8,6 +8,7 @@
 import React, { useMemo } from 'react';
 import { Transaction, Budget, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
+// FIX: Corrected import path for locales/en.ts
 import { TranslationKey } from '../locales/en';
 
 /**

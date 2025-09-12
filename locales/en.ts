@@ -1,27 +1,130 @@
 /**
- * @file English translation strings for the Meme Budget application.
- * This file contains a key-value map of all the English text used in the UI.
- * The keys are used by the localization context to retrieve the correct string.
+ * @file English translation file for the Meme Budget application.
  */
 
 export const en = {
-  // General
-  currencySymbol: '₡',
-  income: 'Income',
-  expense: 'Expense',
-  expenses: 'Expenses',
-  budget: 'Budget',
-  spent: 'Spent',
-  cancel: 'Cancel',
-  add: 'Add',
-  settings: 'Settings',
-  description: 'Description',
-  amount: 'Amount',
-  category: 'Category',
+  // Common
+  currencySymbol: '$',
   save: 'Save',
-  delete: 'Delete',
+  cancel: 'Cancel',
   
-  // Categories
+  // Navigation
+  dashboard: 'Dashboard',
+  analytics: 'Analytics',
+  history: 'History',
+  settings: 'Settings',
+  events: 'Events',
+
+  // Actions
+  addTransaction: 'Add Transaction',
+  setBudget: 'Set Budget',
+  saveBudget: 'Save Budgets',
+  addCategory: 'Add Category',
+  editCategory: 'Edit Category',
+  deleteCategory: 'Delete Category',
+  addEvent: 'New Event',
+  editEvent: 'Edit Event',
+  deleteEvent: 'Delete Event',
+  exportData: 'Export Data',
+  importData: 'Import Data',
+  expense: 'Expense',
+  
+  // Dashboard
+  currentBalance: 'Current Balance',
+  income: 'Income',
+  expenses: 'Expenses',
+  planYourMonth: 'Plan your month!',
+  budgetNotSet: 'You haven\'t set a budget yet. Setting one helps you track your spending.',
+  recentTransactions: 'Recent Transactions',
+  noTransactions: 'No transactions this month.',
+
+  // Analytics
+  spendingAnalytics: 'Spending Analytics',
+  spendingVsBudget: 'Spending vs. Budget',
+  noSpendingData: 'No spending or budget data to analyze for this month. Add some expenses and set budgets to get started!',
+  overBudgetWarning: 'Over budget by ${amount}',
+
+  // History
+  totalBalance: 'Total Balance',
+  noHistory: 'No transaction history from previous months found.',
+  sortByDate: 'Sort by date',
+  sortNewestFirst: 'Newest first',
+  sortOldestFirst: 'Oldest first',
+
+  // Settings
+  budgetSettings: 'Monthly Budget Settings',
+  budgetSettingsDesc: 'Set your spending limits for each category for the current month.',
+  totalIncome: 'Total Income',
+  totalBudgeted: 'Total Budgeted',
+  manageCategories: 'Manage Categories',
+  manageCategoriesDesc: 'Add, edit, or delete your spending categories.',
+  dataManagement: 'Data Management',
+  dataManagementDesc: 'Backup your data to a file or import it from a previous backup.',
+  notifications: 'Notifications',
+  notificationsDesc: 'Set your preferences for reminders and alerts.',
+  notificationFrequency: 'Notification Frequency',
+  freq_monthly: 'Monthly',
+  freq_weekly: 'Weekly',
+  freq_daily: 'Daily',
+  freq_never: 'Never',
+  language: 'Language',
+  languageDesc: 'Choose your preferred language for the application.',
+  selectLanguage: 'Select Language',
+  loveMessage: 'Made with ❤️ for better budgeting',
+
+  // Events
+  eventName: 'Event Name',
+  eventBudget: 'Event Budget',
+  addEventSuccess: 'Event added successfully!',
+  editEventSuccess: 'Event updated successfully!',
+  deleteEventSuccess: 'Event and its transactions have been deleted.',
+  confirmDeleteEventDesc: 'Are you sure you want to delete this event? All associated transactions will also be deleted. This action cannot be undone.',
+  noEvents: 'No special events planned?',
+  createFirstEvent: 'Create one for a vacation, party, or any savings goal!',
+  backToEvents: 'Back to Events',
+  eventBudgetDetails: 'Event Budget Details',
+  totalSpent: 'Total Spent',
+  spent: 'spent',
+  budget: 'Budget',
+  remaining: 'Remaining',
+  eventTransactions: 'Event Transactions',
+  noEventTransactions: 'No expenses have been added to this event yet.',
+  editEventTitle: 'Edit Event',
+
+  // Modals (General)
+  errorCategoryName: 'Please enter a category name.',
+  errorEventName: 'Please enter an event name.',
+  errorEventBudget: 'Please enter a valid, positive budget amount.',
+  
+  // Modals (Category)
+  categoryName: 'Category Name',
+  categoryColor: 'Category Color',
+  categoryIcon: 'Category Icon',
+  addCategorySuccess: 'Category added successfully!',
+  editCategorySuccess: 'Category updated successfully!',
+  deleteCategorySuccess: 'Category deleted successfully!',
+  errorDeleteOtherCategory: 'The "Other" category cannot be deleted.',
+  confirmDeleteDesc: 'Are you sure you want to delete this category? All associated transactions will be moved to "Other".',
+
+  // Modals (Transaction)
+  newTransaction: 'New Transaction',
+  type: 'Type',
+  amount: 'Amount',
+  description: 'Description',
+  date: 'Date',
+  category: 'Category',
+  selectCategory: 'Select a category',
+  errorAmount: 'Please enter a valid, positive amount.',
+  errorDescription: 'Please enter a description.',
+  errorCategory: 'Please select a category for the expense.',
+
+  // Data Management
+  importConfirm: 'This will overwrite all your current data. Are you sure you want to proceed?',
+  importSuccess: 'Data imported successfully!',
+  importErrorInvalidFile: 'Import failed. The file is invalid or corrupted.',
+  budgetSavedSuccess: 'Budgets saved successfully!',
+
+  // Default Categories
   category_groceries: 'Groceries',
   category_transport: 'Transport',
   category_housing: 'Housing',
@@ -31,104 +134,6 @@ export const en = {
   category_food: 'Food & Dining',
   category_utilities: 'Utilities',
   category_other: 'Other',
-
-  // App.tsx
-  addTransaction: 'Add Transaction',
-
-  // BottomNav.tsx
-  dashboard: 'Dashboard',
-  analytics: 'Analytics',
-  history: 'History',
-  events: 'Events',
-  
-  // Dashboard.tsx
-  currentBalance: 'Current Balance',
-  planYourMonth: 'Plan Your Month!',
-  budgetNotSet: "You haven't set a budget for this month. Go to settings to create one.",
-  setBudget: 'Set Budget',
-  recentTransactions: 'Recent Transactions',
-  noTransactions: 'No transactions this month.',
-
-  // Analytics.tsx
-  spendingAnalytics: 'Spending Analytics',
-  noSpendingData: 'No spending data available for this month. Add some expenses or set a budget to see your analytics.',
-  spendingVsBudget: 'Spending vs Budget',
-  overBudgetWarning: '${amount} over budget',
-
-  // History.tsx
-  noHistory: 'No past monthly records found.',
-  totalBalance: 'Total Balance',
-  sortByDate: 'Sort by date',
-  sortNewestFirst: 'Newest first',
-  sortOldestFirst: 'Oldest first',
-
-  // Settings.tsx
-  monthlyBudget: 'Monthly Budget', // Legacy, now budgetSettings
-  setSpendingLimits: "Set your spending limits for each category for the current month.", // Legacy, now budgetSettingsDesc
-  totalIncome: 'Total Income',
-  totalBudgeted: 'Total Budgeted',
-  saveBudget: 'Save Budgets',
-  budgetSavedSuccess: 'Budgets saved successfully!',
-  budgetSettings: 'Monthly Budgets',
-  budgetSettingsDesc: 'Set your spending limits for each category for the current month.',
-  manageCategories: 'Manage Categories',
-  manageCategoriesDesc: 'Add, edit, or delete your spending categories.',
-  addCategory: 'Add New Category',
-  editCategory: 'Edit Category',
-  deleteCategory: 'Delete Category',
-  categoryName: 'Category Name',
-  categoryColor: 'Category Color',
-  confirmDeleteTitle: 'Delete Category',
-  confirmDeleteDesc: 'Are you sure you want to delete this category? All associated transactions will be moved to "Other".',
-  deleteCategorySuccess: 'Category deleted. Transactions moved to "Other".',
-  addCategorySuccess: 'Category added successfully!',
-  editCategorySuccess: 'Category updated successfully!',
-  errorDeleteOtherCategory: 'The "Other" category cannot be deleted.',
-  errorCategoryName: 'Please enter a category name.',
-  notifications: 'Notifications',
-  notificationsDesc: 'Set your preferences for reminders and updates.',
-  notificationFrequency: 'Reminder Frequency',
-  freq_daily: 'Daily',
-  freq_weekly: 'Weekly',
-  freq_monthly: 'Monthly',
-  freq_never: 'Never',
-  language: 'Language',
-  languageDesc: 'Choose the display language for the application.',
-  selectLanguage: 'Select Language',
-  
-  // AddTransactionModal.tsx
-  addTransactionTitle: 'Add Transaction',
-  errorAllFields: 'Please fill all fields',
-  placeholderExpense: 'e.g., Coffee',
-  placeholderIncome: 'e.g., Paycheck',
-  addExpenseToEvent: 'Add Expense to Event',
-
-  // Events Feature
-  addEvent: 'Add Event',
-  editEvent: 'Edit Event',
-  eventName: 'Event Name',
-  eventBudget: 'Event Budget',
-  noEvents: 'No events created yet.',
-  createFirstEvent: 'Create your first event budget!',
-  totalSpent: 'Total Spent',
-  remaining: 'Remaining',
-  eventBudgetDetails: 'Event Budget Details',
-  eventTransactions: 'Event Transactions',
-  noEventTransactions: 'No expenses recorded for this event yet.',
-  addEventSuccess: 'Event created successfully!',
-  errorEventName: 'Please enter an event name.',
-  errorEventBudget: 'Please enter a valid budget amount.',
-  backToEvents: 'Back to Events',
-  editEventTitle: 'Edit Event',
-  deleteEvent: 'Delete Event',
-  confirmDeleteEventTitle: 'Delete Event',
-  confirmDeleteEventDesc: 'Are you sure? Deleting this event will also permanently remove all of its associated transactions.',
-  deleteEventSuccess: 'Event deleted successfully!',
-  editEventSuccess: 'Event updated successfully!',
 };
 
-/**
- * A type representing all possible translation keys.
- * This ensures type safety when using the `t` function.
- */
 export type TranslationKey = keyof typeof en;
