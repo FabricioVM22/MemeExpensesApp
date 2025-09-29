@@ -126,7 +126,7 @@ export default function AddTransactionModal({ isOpen, onClose, onAddTransaction,
               type="date"
               id="date"
               value={date}
-              disabled
+              onChange={e => setDate(e.target.value)}
               className="mt-1 w-full bg-input border-transparent rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
