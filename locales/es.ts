@@ -49,6 +49,12 @@ export const es: typeof en = {
   // History
   totalBalance: 'Saldo Total',
   noHistory: 'No se encontró historial de transacciones de meses anteriores.',
+  historyPlaceholderTitle: "¡Así se verá tu historial!",
+  historyPlaceholderDesc: "Cuando tengas transacciones de meses anteriores, aparecerán aquí, organizadas y listas para consultar.",
+  lastMonthExample: "Ejemplo del Mes Pasado",
+  placeholder_rent: "Pago de Alquiler",
+  placeholder_salary: "Salario Mensual",
+  placeholder_coffee: "Café Diario",
   sortByDate: 'Ordenar por fecha',
   sortNewestFirst: 'Más recientes',
   sortOldestFirst: 'Más antiguos',

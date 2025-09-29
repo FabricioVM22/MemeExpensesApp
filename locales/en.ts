@@ -47,6 +47,12 @@ export const en = {
   // History
   totalBalance: 'Total Balance',
   noHistory: 'No transaction history from previous months found.',
+  historyPlaceholderTitle: "This is what your history will look like!",
+  historyPlaceholderDesc: "Once you have transactions from previous months, they'll show up here, neatly organized.",
+  lastMonthExample: "Last Month Example",
+  placeholder_rent: "Rent Payment",
+  placeholder_salary: "Monthly Salary",
+  placeholder_coffee: "Daily Coffee",
   sortByDate: 'Sort by date',
   sortNewestFirst: 'Newest first',
   sortOldestFirst: 'Oldest first',

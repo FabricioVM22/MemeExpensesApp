@@ -7,7 +7,7 @@
 import React, { useMemo, useState } from 'react';
 import { Transaction, Category } from '../types';
 import { useLocalization } from '../context/LocalizationContext';
-import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon } from './icons';
+import { ChevronDownIcon, ChevronUpIcon, ArrowUpDownIcon, DynamicCategoryIcon } from './icons';
 // FIX: Corrected import path for TransactionItem.tsx
 import TransactionItem from './TransactionItem';
 
@@ -105,12 +105,77 @@ export default function History({ transactions, categories, deleteTransaction }:
 
     if (historicalData.length === 0) {
         return (
-            <div className="text-center py-10 px-4">
-                <h2 className="text-xl font-semibold mb-2">{t('history')}</h2>
-                <p className="text-text-secondary">
-                    {t('noHistory')}
-                </p>
-            </div>
+            <>
+                <div className="text-center py-6 px-4">
+                    <h2 className="text-xl font-semibold mb-2">{t('historyPlaceholderTitle')}</h2>
+                    <p className="text-text-secondary mb-6 max-w-md mx-auto">{t('historyPlaceholderDesc')}</p>
+
+                    <div className="space-y-4 text-left animate-pulse-slow">
+                        {/* The placeholder accordion item */}
+                        <div className="bg-surface border border-border rounded-2xl shadow-lg">
+                            {/* Header */}
+                            <div className="w-full p-4 flex justify-between items-center">
+                                <div>
+                                    <h3 className="font-bold text-lg">{t('lastMonthExample')}</h3>
+                                    <p className="text-sm text-success">
+                                        {t('totalBalance')}: {t('currencySymbol')}850.50
+                                    </p>
+                                </div>
+                                <ChevronUpIcon className="w-6 h-6"/>
+                            </div>
+                            {/* Content */}
+                            <div className="px-4 pb-4 space-y-3 border-t border-border">
+                                <div className="flex items-center p-2 rounded-lg">
+                                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'hsl(var(--success) / 0.1)', color: 'hsl(var(--success))' }}>
+                                        <DynamicCategoryIcon name="trending-up" className="w-5 h-5" />
+                                    </div>
+                                    <div className="ml-3 flex-1 min-w-0">
+                                        <p className="font-medium truncate">{t('placeholder_salary')}</p>
+                                        <p className="text-sm text-text-secondary">May 1</p>
+                                    </div>
+                                    <div className="ml-3 font-semibold text-success">
+                                        +{t('currencySymbol')}2200.00
+                                    </div>
+                                </div>
+                                <div className="flex items-center p-2 rounded-lg">
+                                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#6b728020', color: '#6b7280' }}>
+                                        <DynamicCategoryIcon name="home-modern" className="w-5 h-5" />
+                                    </div>
+                                    <div className="ml-3 flex-1 min-w-0">
+                                        <p className="font-medium truncate">{t('placeholder_rent')}</p>
+                                        <p className="text-sm text-text-secondary">May 1</p>
+                                    </div>
+                                    <div className="ml-3 font-semibold text-danger">
+                                        -{t('currencySymbol')}1345.00
+                                    </div>
+                                </div>
+                                 <div className="flex items-center p-2 rounded-lg">
+                                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#ef444420', color: '#ef4444' }}>
+                                        <DynamicCategoryIcon name="restaurant" className="w-5 h-5" />
+                                    </div>
+                                    <div className="ml-3 flex-1 min-w-0">
+                                        <p className="font-medium truncate">{t('placeholder_coffee')}</p>
+                                        <p className="text-sm text-text-secondary">May 3</p>
+                                    </div>
+                                    <div className="ml-3 font-semibold text-danger">
+                                        -{t('currencySymbol')}4.50
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <style>{`
+                    @keyframes pulse-slow {
+                      50% {
+                        opacity: .85;
+                      }
+                    }
+                    .animate-pulse-slow {
+                      animation: pulse-slow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+                    }
+                `}</style>
+            </>
         );
     }
 
