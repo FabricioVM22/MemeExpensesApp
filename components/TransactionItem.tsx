@@ -15,7 +15,8 @@ interface TransactionItemProps {
   setActiveSwipedItemId: (id: string | null) => void;
 }
 
-export default function TransactionItem({ transaction, getCategory, onDelete, activeSwipedItemId, setActiveSwipedItemId }: TransactionItemProps): React.ReactNode {
+// FIX: Change to React.FC to correctly handle props like 'key' which is managed by React.
+const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, getCategory, onDelete, activeSwipedItemId, setActiveSwipedItemId }) => {
   const { t } = useLocalization();
   const itemRef = useRef<HTMLDivElement>(null);
   const [swipeX, setSwipeX] = useState(0);
@@ -104,3 +105,5 @@ export default function TransactionItem({ transaction, getCategory, onDelete, ac
     </div>
   );
 }
+
+export default TransactionItem;

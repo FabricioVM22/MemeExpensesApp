@@ -89,8 +89,9 @@ export default function Settings({
    * Saves the locally edited budgets to the global state for the current month.
    */
   const handleSaveBudgets = () => {
+    // FIX: Explicitly convert amount to a number to resolve type mismatch (unknown vs number).
     const newBudgets: Budget[] = Object.entries(localBudgets)
-        .map(([categoryId, amount]) => ({ categoryId, amount }))
+        .map(([categoryId, amount]) => ({ categoryId, amount: Number(amount) }))
         .filter(b => b.amount > 0); // Only save budgets with a positive amount
     setMonthBudget(newBudgets);
     alert(t('budgetSavedSuccess'));
@@ -110,7 +111,8 @@ export default function Settings({
    * Memoized calculation for the total amount budgeted across all categories in local state.
    */
   const totalBudgeted = useMemo(() => {
-    return Object.values(localBudgets).reduce((sum, amount) => sum + amount, 0);
+    // FIX: Explicitly convert amount to a number before adding to prevent type errors with the `+` operator.
+    return Object.values(localBudgets).reduce((sum, amount) => sum + Number(amount), 0);
   }, [localBudgets]);
 
   /**

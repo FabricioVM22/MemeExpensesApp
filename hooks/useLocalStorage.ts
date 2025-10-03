@@ -2,7 +2,8 @@
  * @file Defines the useLocalStorage custom hook for persistent state management.
  */
 
-import { useState, useEffect } from 'react';
+// FIX: Import Dispatch and SetStateAction to provide explicit types for useState's return tuple.
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 // --- LocalStorage Availability Check ---
 
@@ -49,7 +50,8 @@ const checkLocalStorageAvailability = (): boolean => {
  * @param {T} initialValue The initial value to use if no value is found in localStorage.
  * @returns A stateful value, and a function to update it.
  */
-export function useLocalStorage<T,>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
+// FIX: Use the imported Dispatch and SetStateAction types instead of the React namespace.
+export function useLocalStorage<T,>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>] {
   /**
    * Initializes the state. It attempts to retrieve and parse the value
    * from localStorage. If storage is unavailable, parsing fails, or the key

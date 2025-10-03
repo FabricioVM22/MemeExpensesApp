@@ -6,7 +6,7 @@ import { en } from './en';
 
 export const es: typeof en = {
   // Common
-  currencySymbol: '$',
+  currencySymbol: '₡',
   save: 'Guardar',
   cancel: 'Cancelar',
 

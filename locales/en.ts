@@ -4,7 +4,7 @@
 
 export const en = {
   // Common
-  currencySymbol: '$',
+  currencySymbol: '₡',
   save: 'Save',
   cancel: 'Cancel',
   

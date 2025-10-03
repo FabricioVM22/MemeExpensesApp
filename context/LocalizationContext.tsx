@@ -44,6 +44,11 @@ interface LocalizationContextType {
 
 const LocalizationContext = createContext<LocalizationContextType | undefined>(undefined);
 
+// FIX: Define an explicit props type for the provider to ensure children are correctly typed.
+interface LocalizationProviderProps {
+  children: React.ReactNode;
+}
+
 /**
  * A provider component that wraps the application to make localization
  * functionality available to all child components.
@@ -51,7 +56,7 @@ const LocalizationContext = createContext<LocalizationContextType | undefined>(u
  * @param {React.ReactNode} props.children - The child components to render.
  * @returns The provider component.
  */
-export const LocalizationProvider = ({ children }: { children: React.ReactNode }) => {
+export const LocalizationProvider = ({ children }: LocalizationProviderProps) => {
   const [locale, setLocale] = useLocalStorage<'en' | 'es'>('language', getInitialLocale());
   const langFile = translations[locale];
 
